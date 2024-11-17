@@ -151,7 +151,7 @@ function onAuctionEnd({auctionId, bidsReceived, bidderRequests, adUnitCodes, adU
     if (!Object.prototype.hasOwnProperty.call(paapiConfigs, au)) {
       paapiConfigs[au] = null;
     }
-    !Object.prototype.hasOwnProperty.call(latestAuctionForAdUnit, au) && (latestAuctionForAdUnit[au] = null);
+    
   });
 
   const pendingConfigs = pendingConfigsForAuction(auctionId);
@@ -234,7 +234,7 @@ function onAuctionEnd({auctionId, bidsReceived, bidderRequests, adUnitCodes, adU
 }
 
 function append(target, key, value) {
-  !Object.prototype.hasOwnProperty.call(target, key) && (target[key] = []);
+  
   target[key].push(value);
 }
 
@@ -348,7 +348,7 @@ export function partitionBuyersByBidder(igbRequests) {
   const requests = {};
   const igbs = {};
   igbRequests.forEach(([request, igb]) => {
-    !Object.prototype.hasOwnProperty.call(requests, request.bidder) && (requests[request.bidder] = request);
+    
     append(igbs, request.bidder, igb);
   })
   return Object.entries(igbs).map(([bidder, igbs]) => [requests[bidder], igbs])
