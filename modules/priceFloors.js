@@ -155,7 +155,7 @@ export function getFirstMatchingFloor(floorData, bidObject, responseObject = {})
     return {...previousMatch};
   }
   let allPossibleMatches = generatePossibleEnumerations(fieldValues, deepAccess(floorData, 'schema.delimiter') || '|');
-  let matchingRule = find(allPossibleMatches, hashValue => floorData.values.hasOwnProperty(hashValue));
+  let matchingRule = find(allPossibleMatches, hashValue => Object.prototype.hasOwnProperty.call(floorData.values, hashValue));
 
   let matchingData = {
     floorMin: floorData.floorMin || 0,
@@ -426,7 +426,7 @@ export function createFloorsDataForAuction(adUnits, auctionId) {
     if (isSkipped) resolvedFloorsData.skippedReason = FLOOR_SKIPPED_REASON.RANDOM
   }
   // copy FloorMin to floorData.data
-  if (resolvedFloorsData.hasOwnProperty('floorMin')) resolvedFloorsData.data.floorMin = resolvedFloorsData.floorMin;
+  if (Object.prototype.hasOwnProperty.call(resolvedFloorsData, 'floorMin')) resolvedFloorsData.data.floorMin = resolvedFloorsData.floorMin;
   // add floorData to bids
   updateAdUnitsForAuction(adUnits, resolvedFloorsData, auctionId);
   return resolvedFloorsData;

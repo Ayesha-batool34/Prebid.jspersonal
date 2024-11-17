@@ -135,7 +135,7 @@ const CONVERTER = ortbConverter({
     }
     [VIDEO, BANNER].forEach(namespace => {
       COMMON_PARAMS.forEach(param => {
-        if (bidRequest.params.hasOwnProperty(param)) {
+        if (Object.prototype.hasOwnProperty.call(bidRequest.params, param)) {
           utils.deepSetValue(imp, `${namespace}.${param}`, bidRequest.params[param])
         }
       })

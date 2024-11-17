@@ -174,7 +174,7 @@ function buildVideoImp(bidRequest, imp) {
   }
 
   VIDEO_ORTB_PARAMS.forEach((param) => {
-    if (videoParams.hasOwnProperty(param)) {
+    if (Object.prototype.hasOwnProperty.call(videoParams, param)) {
       utils.deepSetValue(imp, `video.${param}`, videoParams[param]);
     }
   });
@@ -200,7 +200,7 @@ function buildBannerImp(bidRequest, imp) {
   }
 
   BANNER_ORTB_PARAMS.forEach((param) => {
-    if (bannerParams.hasOwnProperty(param)) {
+    if (Object.prototype.hasOwnProperty.call(bannerParams, param)) {
       utils.deepSetValue(imp, `banner.${param}`, bannerParams[param]);
     }
   });

@@ -437,7 +437,7 @@ function onAuctionEnd(args) {
  * @returns {boolean} True if it's an object and exists, false otherwise (null, array, primitive, function)
  */
 cnvrHelper.keyExistsAndIsObject = function (parent, key) {
-  if (!parent.hasOwnProperty(key)) {
+  if (!Object.prototype.hasOwnProperty.call(parent, key)) {
     return false;
   }
   return typeof parent[key] === 'object' &&

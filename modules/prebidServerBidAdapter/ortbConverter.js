@@ -197,7 +197,7 @@ const PBS_CONVERTER = ortbConverter({
             .filter(({bidders, schain}) => bidders?.length > 0 && schain)
             .reduce((chains, {bidders, schain}) => {
               const key = JSON.stringify(schain);
-              if (!chains.hasOwnProperty(key)) {
+              if (!Object.prototype.hasOwnProperty.call(chains, key)) {
                 chains[key] = {bidders: new Set(), schain};
               }
               bidders.forEach((bidder) => chains[key].bidders.add(bidder));
@@ -247,7 +247,7 @@ export function buildPBSRequest(s2sBidRequest, bidderRequests, adUnits, requeste
     const bidders = {};
     return (bidder) => {
       if (bidder == null) return global;
-      if (!bidders.hasOwnProperty(bidder)) {
+      if (!Object.prototype.hasOwnProperty.call(bidders, bidder)) {
         bidders[bidder] = redactor(activityParams(MODULE_TYPE_BIDDER, bidder));
       }
       return bidders[bidder]

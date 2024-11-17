@@ -2413,7 +2413,7 @@ describe('Media.net bid adapter', function () {
     it('should build valid payload with floor', function () {
       let requestObj = spec.buildRequests(VALID_BID_REQUEST, VALID_AUCTIONDATA);
       requestObj = JSON.parse(requestObj.data);
-      expect(requestObj.imp[0].hasOwnProperty('bidfloors')).to.equal(true);
+      expect(Object.prototype.hasOwnProperty.call(requestObj.imp[0], 'bidfloors')).to.equal(true);
     });
   });
 

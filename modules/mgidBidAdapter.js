@@ -111,7 +111,7 @@ export const spec = {
       if (isPlainObject(nativeParams)) {
         for (let k in nativeParams) {
           let v = nativeParams[k];
-          const supportProp = spec.NATIVE_ASSET_KEY_TO_ASSET_MAP.hasOwnProperty(k);
+          const supportProp = Object.prototype.hasOwnProperty.call(spec.NATIVE_ASSET_KEY_TO_ASSET_MAP, k);
           if (supportProp) {
             assetsCount++;
           }
@@ -477,8 +477,8 @@ function createNativeRequest(params) {
   };
   for (let key in params) {
     let assetObj = {};
-    if (params.hasOwnProperty(key)) {
-      if (!(nativeRequestObject.assets && nativeRequestObject.assets.length > 0 && nativeRequestObject.assets.hasOwnProperty(key))) {
+    if (Object.prototype.hasOwnProperty.call(params, key)) {
+      if (!(nativeRequestObject.assets && nativeRequestObject.assets.length > 0 && Object.prototype.hasOwnProperty.call(nativeRequestObject.assets, key))) {
         switch (key) {
           case NATIVE_ASSETS.TITLE.KEY:
             assetObj = {
@@ -595,7 +595,7 @@ function commonNativeRequestObject(nativeAsset, params) {
 
 function parseNativeResponse(bid, newBid) {
   newBid.native = {};
-  if (bid.hasOwnProperty('adm')) {
+  if (Object.prototype.hasOwnProperty.call(bid, 'adm')) {
     let nativeAdm = '';
     try {
       nativeAdm = JSON.parse(bid.adm);

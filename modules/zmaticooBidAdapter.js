@@ -206,8 +206,8 @@ export const spec = {
     if (!bid['nurl']) {
       return false
     }
-    const winCpm = (bid.hasOwnProperty('originalCpm')) ? bid.originalCpm : bid.cpm
-    const winCurr = (bid.hasOwnProperty('originalCurrency') && bid.hasOwnProperty('originalCpm')) ? bid.originalCurrency : bid.currency
+    const winCpm = (Object.prototype.hasOwnProperty.call(bid, 'originalCpm')) ? bid.originalCpm : bid.cpm
+    const winCurr = (Object.prototype.hasOwnProperty.call(bid, 'originalCurrency') && Object.prototype.hasOwnProperty.call(bid, 'originalCpm')) ? bid.originalCurrency : bid.currency
     const winUrl = bid.nurl.replace(
       /\$\{AUCTION_PRICE\}/,
       winCpm
@@ -243,7 +243,7 @@ function buildVideo(request) {
   let video = {};
   const videoParams = deepAccess(request, 'mediaTypes.video', {});
   for (const key in VIDEO_CUSTOM_PARAMS) {
-    if (videoParams.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(videoParams, key)) {
       video[key] = checkParamDataType(key, videoParams[key], VIDEO_CUSTOM_PARAMS[key]);
     }
   }

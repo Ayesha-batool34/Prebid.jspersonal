@@ -83,7 +83,7 @@ export const ftrackIdSubmodule = {
     }
 
     // If we have DeviceId value, assign it to the uid property
-    if (DECODE_RESPONSE.ftrackId.ext.hasOwnProperty('DeviceID')) {
+    if (Object.prototype.hasOwnProperty.call(DECODE_RESPONSE.ftrackId.ext, 'DeviceID')) {
       DECODE_RESPONSE.ftrackId.uid = DECODE_RESPONSE.ftrackId.ext.DeviceID;
     }
 
@@ -126,17 +126,17 @@ export const ftrackIdSubmodule = {
         };
 
         // If config.params.ids does not exist, set defaults
-        if (!config.params.hasOwnProperty('ids')) {
+        if (!Object.prototype.hasOwnProperty.call(config.params, 'ids')) {
           window.D9r.DeviceID = true;
           window.D9r.SingleDeviceID = true;
         } else {
-          if (config.params.ids.hasOwnProperty('device id') && config.params.ids['device id'] === true) {
+          if (Object.prototype.hasOwnProperty.call(config.params.ids, 'device id') && config.params.ids['device id'] === true) {
             window.D9r.DeviceID = true;
           }
-          if (config.params.ids.hasOwnProperty('single device id') && config.params.ids['single device id'] === true) {
+          if (Object.prototype.hasOwnProperty.call(config.params.ids, 'single device id') && config.params.ids['single device id'] === true) {
             window.D9r.SingleDeviceID = true;
           }
-          if (config.params.ids.hasOwnProperty('household id') && config.params.ids['household id'] === true) {
+          if (Object.prototype.hasOwnProperty.call(config.params.ids, 'household id') && config.params.ids['household id'] === true) {
             window.D9r.HHID = true;
           }
         }
@@ -182,7 +182,7 @@ export const ftrackIdSubmodule = {
       utils.logWarn(LOG_PREFIX + 'config.storage.name recommended to be "' + FTRACK_STORAGE_NAME + '".');
     }
 
-    if (!config.hasOwnProperty('params') || !config.params.hasOwnProperty('url')) {
+    if (!Object.prototype.hasOwnProperty.call(config, 'params') || !Object.prototype.hasOwnProperty.call(config.params, 'url')) {
       utils.logWarn(LOG_PREFIX + 'config.params.url is required for ftrack to run.');
       return false;
     }

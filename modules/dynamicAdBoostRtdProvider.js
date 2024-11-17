@@ -83,7 +83,7 @@ function getBidRequestData(reqBidsConfigObj, callback, config, userConsent) {
   if (Array.isArray(reqAdUnits)) {
     reqAdUnits.forEach(adunit => {
       let gptCode = deepAccess(adunit, 'code');
-      if (dynamicAdBoostAdUnits.hasOwnProperty(gptCode)) {
+      if (Object.prototype.hasOwnProperty.call(dynamicAdBoostAdUnits, gptCode)) {
         // AdUnits has reached target viewablity at some point
         deepSetValue(adunit, `ortb2Imp.ext.data.${MODULE_NAME}.${gptCode}`, dynamicAdBoostAdUnits[gptCode]);
       }

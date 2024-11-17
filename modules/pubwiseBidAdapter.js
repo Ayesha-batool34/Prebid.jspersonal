@@ -152,7 +152,7 @@ export const spec = {
       }
 
       // video ad validation
-      if (bid.hasOwnProperty('mediaTypes') && bid.mediaTypes.hasOwnProperty(VIDEO)) {
+      if (Object.prototype.hasOwnProperty.call(bid, 'mediaTypes') && Object.prototype.hasOwnProperty.call(bid.mediaTypes, VIDEO)) {
         // bid.mediaTypes.video.mimes OR bid.params.video.mimes should be present and must be a non-empty array
         let mediaTypesVideoMimes = deepAccess(bid.mediaTypes, 'video.mimes');
         let paramsVideoMimes = deepAccess(bid, 'params.video.mimes');
@@ -161,7 +161,7 @@ export const spec = {
           return false;
         }
 
-        if (!bid.mediaTypes[VIDEO].hasOwnProperty('context')) {
+        if (!Object.prototype.hasOwnProperty.call(bid.mediaTypes[VIDEO], 'context')) {
           _logError(`no context specified in bid. Rejecting bid: `, JSON.stringify(bid));
           return false;
         }
@@ -206,7 +206,7 @@ export const spec = {
       bidCurrency = bid.params.currency || UNDEFINED;
       bid.params.currency = bidCurrency;
 
-      if (bid.params.hasOwnProperty('bcat') && isArray(bid.params.bcat)) {
+      if (Object.prototype.hasOwnProperty.call(bid.params, 'bcat') && isArray(bid.params.bcat)) {
         blockedIabCategories = blockedIabCategories.concat(bid.params.bcat);
       }
 
@@ -339,8 +339,8 @@ export const spec = {
                           case INSTREAM:
                             break;
                         }
-                        newBid.width = bid.hasOwnProperty('w') ? bid.w : req.video.w;
-                        newBid.height = bid.hasOwnProperty('h') ? bid.h : req.video.h;
+                        newBid.width = Object.prototype.hasOwnProperty.call(bid, 'w') ? bid.w : req.video.w;
+                        newBid.height = Object.prototype.hasOwnProperty.call(bid, 'h') ? bid.h : req.video.h;
                         newBid.vastXml = bid.adm;
                         newBid.vastUrl = bid.vastUrl;
                         break;
@@ -405,7 +405,7 @@ function _checkMediaType(bid, newBid) {
 
 function _parseNativeResponse(bid, newBid) {
   newBid.native = {};
-  if (bid.hasOwnProperty('adm')) {
+  if (Object.prototype.hasOwnProperty.call(bid, 'adm')) {
     var adm = '';
     try {
       adm = JSON.parse(bid.adm.replace(/\\/g, ''));
@@ -473,7 +473,7 @@ function _getDomainFromURL(url) {
 function _handleCustomParams(params, conf) {
   var key, value, entry;
   for (key in CUSTOM_PARAMS) {
-    if (CUSTOM_PARAMS.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(CUSTOM_PARAMS, key)) {
       value = params[key];
       if (value) {
         entry = CUSTOM_PARAMS[key];
@@ -541,7 +541,7 @@ function _createImpressionObject(bid, conf) {
     }
   };
 
-  if (bid.hasOwnProperty('mediaTypes')) {
+  if (Object.prototype.hasOwnProperty.call(bid, 'mediaTypes')) {
     for (mediaTypes in bid.mediaTypes) {
       switch (mediaTypes) {
         case BANNER:
@@ -572,9 +572,9 @@ function _createImpressionObject(bid, conf) {
 
   _addFloorFromFloorModule(impObj, bid);
 
-  return impObj.hasOwnProperty(BANNER) ||
-          impObj.hasOwnProperty(NATIVE) ||
-            impObj.hasOwnProperty(VIDEO) ? impObj : UNDEFINED;
+  return Object.prototype.hasOwnProperty.call(impObj, BANNER) ||
+          Object.prototype.hasOwnProperty.call(impObj, NATIVE) ||
+            Object.prototype.hasOwnProperty.call(impObj, VIDEO) ? impObj : UNDEFINED;
 }
 
 function _parseSlotParam(paramName, paramValue) {
@@ -608,9 +608,9 @@ function _parseAdSlot(bid) {
   bid.params.height = 0;
   bid.params.adSlot = _cleanSlotName(bid.params.adSlot);
 
-  if (bid.hasOwnProperty('mediaTypes')) {
-    if (bid.mediaTypes.hasOwnProperty(BANNER) &&
-        bid.mediaTypes.banner.hasOwnProperty('sizes')) { // if its a banner, has mediaTypes and sizes
+  if (Object.prototype.hasOwnProperty.call(bid, 'mediaTypes')) {
+    if (Object.prototype.hasOwnProperty.call(bid.mediaTypes, BANNER) &&
+        Object.prototype.hasOwnProperty.call(bid.mediaTypes.banner, 'sizes')) { // if its a banner, has mediaTypes and sizes
       var i = 0;
       var sizeArray = [];
       for (;i < bid.mediaTypes.banner.sizes.length; i++) {
@@ -665,7 +665,7 @@ function _addFloorFromFloorModule(impObj, bid) {
   // get lowest floor from floorModule
   if (typeof bid.getFloor === 'function' && !config.getConfig('pubwise.disableFloors')) {
     [BANNER, VIDEO, NATIVE].forEach(mediaType => {
-      if (impObj.hasOwnProperty(mediaType)) {
+      if (Object.prototype.hasOwnProperty.call(impObj, mediaType)) {
         let floorInfo = bid.getFloor({ currency: impObj.bidFloorCur, mediaType: mediaType, size: '*' });
         if (typeof floorInfo === 'object' && floorInfo.currency === impObj.bidFloorCur && !isNaN(parseInt(floorInfo.floor))) {
           let mediaTypeFloor = parseFloat(floorInfo.floor);
@@ -689,9 +689,9 @@ function _createNativeRequest(params) {
     assets: []
   };
   for (var key in params) {
-    if (params.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(params, key)) {
       var assetObj = {};
-      if (!(nativeRequestObject.assets && nativeRequestObject.assets.length > 0 && nativeRequestObject.assets.hasOwnProperty(key))) {
+      if (!(nativeRequestObject.assets && nativeRequestObject.assets.length > 0 && Object.prototype.hasOwnProperty.call(nativeRequestObject.assets, key))) {
         switch (key) {
           case NATIVE_ASSETS.TITLE.KEY:
             if (params[key].len || params[key].length) {
@@ -896,7 +896,7 @@ function _createVideoRequest(bid) {
     videoObj = {};
     _checkVideoPlacement(videoData, bid.adUnitCode);
     for (var key in VIDEO_CUSTOM_PARAMS) {
-      if (videoData.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(videoData, key)) {
         videoObj[key] = _checkParamDataType(key, videoData[key], VIDEO_CUSTOM_PARAMS[key]);
       }
     }

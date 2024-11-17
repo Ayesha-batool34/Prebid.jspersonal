@@ -50,10 +50,10 @@ export function init(config, userConsent) {
     utils.logError('missing pubId param for IAS provider');
     return false;
   }
-  if (params.hasOwnProperty('keyMappings')) {
+  if (Object.prototype.hasOwnProperty.call(params, 'keyMappings')) {
     const keyMappings = params.keyMappings;
     for (let prop in keyMappings) {
-      if (IAS_KEY_MAPPINGS.hasOwnProperty(prop)) {
+      if (Object.prototype.hasOwnProperty.call(IAS_KEY_MAPPINGS, prop)) {
         IAS_KEY_MAPPINGS[prop] = keyMappings[prop]
       }
     }
@@ -78,7 +78,7 @@ function getAdUnitPath(adSlot, bidRequest, adUnitPath) {
   if (!utils.isEmpty(adSlot)) {
     p = adSlot.gptSlot;
   } else {
-    if (!utils.isEmpty(adUnitPath) && adUnitPath.hasOwnProperty(bidRequest.code)) {
+    if (!utils.isEmpty(adUnitPath) && Object.prototype.hasOwnProperty.call(adUnitPath, bidRequest.code)) {
       if (utils.isStr(adUnitPath[bidRequest.code]) && !utils.isEmpty(adUnitPath[bidRequest.code])) {
         p = adUnitPath[bidRequest.code];
       }
@@ -111,7 +111,7 @@ function stringifyScreenSize() {
 function renameKeyValues(source) {
   let result = {};
   for (let prop in IAS_KEY_MAPPINGS) {
-    if (source.hasOwnProperty(prop)) {
+    if (Object.prototype.hasOwnProperty.call(source, prop)) {
       result[IAS_KEY_MAPPINGS[prop]] = source[prop];
     }
   }

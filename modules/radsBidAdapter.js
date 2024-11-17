@@ -151,7 +151,7 @@ function objectToQueryString(obj, prefix) {
   let str = [];
   let p;
   for (p in obj) {
-    if (obj.hasOwnProperty(p)) {
+    if (Object.prototype.hasOwnProperty.call(obj, p)) {
       let k = prefix ? prefix + '[' + p + ']' : p;
       let v = obj[p];
       str.push((v !== null && typeof v === 'object')

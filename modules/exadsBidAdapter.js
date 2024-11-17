@@ -180,7 +180,7 @@ function handleResORTB2Dot4(serverResponse, request, adPartner) {
   let bidResponses = [];
   const bidRq = JSON.parse(request.data);
 
-  if (serverResponse.hasOwnProperty('body') && serverResponse.body.hasOwnProperty('id')) {
+  if (Object.prototype.hasOwnProperty.call(serverResponse, 'body') && Object.prototype.hasOwnProperty.call(serverResponse.body, 'id')) {
     utils.logInfo('Ad server response', serverResponse.body.id);
 
     const requestId = serverResponse.body.id;
@@ -387,7 +387,7 @@ function handleValidORTB2Dot4(bid) {
   const isValid = (
     hasValue(bid.params.endpoint) &&
     hasValue(bid.params.userIp) &&
-    bid.params.hasOwnProperty('userIp') &&
+    Object.prototype.hasOwnProperty.call(bid.params, 'userIp') &&
     hasValue(bid.params.zoneId) &&
     hasValue(bid.params.partner) &&
     hasValue(bid.params.fid) &&

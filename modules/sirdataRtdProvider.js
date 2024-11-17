@@ -556,7 +556,7 @@ export function getSegAndCatsArray(data, minScore, pid) {
   try {
     if (contextualCategories) {
       for (let catId in contextualCategories) {
-        if (contextualCategories.hasOwnProperty(catId) && contextualCategories[catId]) {
+        if (Object.prototype.hasOwnProperty.call(contextualCategories, catId) && contextualCategories[catId]) {
           let value = contextualCategories[catId];
           if (value >= minScore && !sirdataData.categories.includes(catId)) {
             if (pid === '27440' && cattaxid) { // Equativ only
@@ -576,7 +576,7 @@ export function getSegAndCatsArray(data, minScore, pid) {
   try {
     if (segments) {
       for (let segId in segments) {
-        if (segments.hasOwnProperty(segId) && segments[segId]) {
+        if (Object.prototype.hasOwnProperty.call(segments, segId) && segments[segId]) {
           let id = segments[segId].toString();
           if (pid === '27440' && segtaxid) { // Equativ only
             sirdataData.segments.push(`${pid}us${id}`);

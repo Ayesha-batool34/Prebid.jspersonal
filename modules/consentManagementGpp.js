@@ -206,7 +206,7 @@ function loadConsentData(cb) {
     }
   }
 
-  if (!cmpCallMap.hasOwnProperty(userCMP)) {
+  if (!Object.prototype.hasOwnProperty.call(cmpCallMap, userCMP)) {
     done(null, false, `GPP CMP framework (${userCMP}) is not a supported framework.  Aborting consentManagement module and resuming auction.`);
     return;
   }

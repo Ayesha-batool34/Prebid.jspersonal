@@ -91,13 +91,13 @@ function convertKeywordsToANMap(kwarray) {
       let val = kwPair[1];
 
       // then check for existing key in result > if so add value to the array > if not, add new key and create value array
-      if (result.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(result, key)) {
         result[key].push(val);
       } else {
         result[key] = [val];
       }
     } else {
-      if (!result.hasOwnProperty(kw)) {
+      if (!Object.prototype.hasOwnProperty.call(result, kw)) {
         result[kw] = [];
       }
     }

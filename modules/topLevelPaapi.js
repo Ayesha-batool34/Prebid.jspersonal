@@ -162,7 +162,7 @@ export function getPAAPIBids(filters, raa = (...args) => navigator.runAdAuction(
     Object.entries(expandFilters(filters))
       .map(([adUnitCode, auctionId]) => {
         const bids = paapiBids(auctionId);
-        if (bids && !bids.hasOwnProperty(adUnitCode)) {
+        if (bids && !Object.prototype.hasOwnProperty.call(bids, adUnitCode)) {
           const auctionConfig = getPAAPIConfig({adUnitCode, auctionId})[adUnitCode];
           if (auctionConfig) {
             emit(EVENTS.RUN_PAAPI_AUCTION, {

@@ -47,7 +47,7 @@ export function objectGuard(rules) {
     return new Proxy(obj, {
       get(target, prop, receiver) {
         const val = Reflect.get(target, prop, receiver);
-        if (tree.hasOwnProperty(prop)) {
+        if (Object.prototype.hasOwnProperty.call(tree, prop)) {
           const {children, rule} = tree[prop];
           if (children && val != null && typeof val === 'object') {
             return mkGuard(val, children, applies);
@@ -83,7 +83,7 @@ export function writeProtectRule(ruleDef) {
   return Object.assign({
     wp: true,
     run(root, path, object, property, applies) {
-      const origHasProp = object && object.hasOwnProperty(property);
+      const origHasProp = object && Object.prototype.hasOwnProperty.call(object, property);
       const original = origHasProp ? object[property] : undefined;
       const origCopy = origHasProp && original != null && typeof original === 'object' ? deepClone(original) : original;
       return function () {

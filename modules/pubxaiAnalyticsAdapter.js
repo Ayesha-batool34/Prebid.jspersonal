@@ -32,7 +32,7 @@ export const sendCache = new Proxy(
   {},
   {
     get: (target, name) => {
-      if (!target.hasOwnProperty(name)) {
+      if (!Object.prototype.hasOwnProperty.call(target, name)) {
         target[name] = [];
       }
       return target[name];
@@ -51,7 +51,7 @@ export const auctionCache = new Proxy(
   {},
   {
     get: (target, name) => {
-      if (!target.hasOwnProperty(name)) {
+      if (!Object.prototype.hasOwnProperty.call(target, name)) {
         target[name] = {
           bids: [],
           auctionDetail: {

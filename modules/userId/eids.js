@@ -39,7 +39,7 @@ export function createEidsArray(bidRequestUserId, eidConfigs = EID_CONFIG) {
   const allEids = {};
   function collect(eid) {
     const key = JSON.stringify([eid.source?.toLowerCase(), eid.ext]);
-    if (allEids.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(allEids, key)) {
       allEids[key].uids.push(...eid.uids);
     } else {
       allEids[key] = eid;

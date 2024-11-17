@@ -153,7 +153,7 @@ function updateOrtbConfig(bidder, currConfig, segmentIDs, sspSegmentIDs, topics,
   }
 
   const transformedUserData = transformationConfigs
-    .filter(({ id }) => ortb2UserDataTransformations.hasOwnProperty(id))
+    .filter(({ id }) => Object.prototype.hasOwnProperty.call(ortb2UserDataTransformations, id))
     .map(({ id, config }) => ortb2UserDataTransformations[id](permutiveUserData, config))
 
   const customCohortsUserData = {

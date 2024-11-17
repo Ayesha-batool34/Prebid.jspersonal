@@ -133,7 +133,7 @@ function getUrlParams(params, schainFromBidRequest) {
 
   if (!isEmpty(params)) {
     for (let key in params) {
-      if (key !== 'schain' && params.hasOwnProperty(key) && !isEmpty(params[key])) {
+      if (key !== 'schain' && Object.prototype.hasOwnProperty.call(params, key) && !isEmpty(params[key])) {
         urlSuffix += `&${key}=${params[key]}`;
       }
     }

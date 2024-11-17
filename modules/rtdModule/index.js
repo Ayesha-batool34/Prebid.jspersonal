@@ -396,13 +396,13 @@ export function deepMerge(arr) {
   }
   return arr.reduce((merged, obj) => {
     for (let key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        if (!merged.hasOwnProperty(key)) merged[key] = obj[key];
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        if (!Object.prototype.hasOwnProperty.call(merged, key)) merged[key] = obj[key];
         else {
           // duplicate key - merge values
           const dp = obj[key];
           for (let dk in dp) {
-            if (dp.hasOwnProperty(dk)) merged[key][dk] = dp[dk];
+            if (Object.prototype.hasOwnProperty.call(dp, dk)) merged[key][dk] = dp[dk];
           }
         }
       }

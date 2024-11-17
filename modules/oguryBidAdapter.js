@@ -126,7 +126,7 @@ function buildRequests(validBidRequests, bidderRequest) {
       .map(size => ({ w: size[0], h: size[1] }));
 
     if (bidRequest.mediaTypes &&
-      bidRequest.mediaTypes.hasOwnProperty('banner')) {
+      Object.prototype.hasOwnProperty.call(bidRequest.mediaTypes, 'banner')) {
       openRtbBidRequestBanner.site.id = bidRequest.params.assetKey;
       const floor = getFloor(bidRequest);
 

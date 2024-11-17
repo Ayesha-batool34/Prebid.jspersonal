@@ -55,7 +55,7 @@ export const spec = {
     const bidResponses = [];
     let bid = null;
 
-    if (!serverResponse.hasOwnProperty('body') || !serverResponse.body.hasOwnProperty('seatbid')) {
+    if (!Object.prototype.hasOwnProperty.call(serverResponse, 'body') || !Object.prototype.hasOwnProperty.call(serverResponse.body, 'seatbid')) {
       return bidResponses;
     }
 
@@ -63,7 +63,7 @@ export const spec = {
     const seatbid = serverBody.seatbid;
 
     for (let i = 0; i < seatbid.length; i++) {
-      if (!seatbid[i].hasOwnProperty('bid')) {
+      if (!Object.prototype.hasOwnProperty.call(seatbid[i], 'bid')) {
         continue;
       }
 

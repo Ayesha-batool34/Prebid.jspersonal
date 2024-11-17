@@ -75,7 +75,7 @@ export function getVastTrackers(bid) {
 };
 
 function isValidVastTracker(trackers, trackerToAdd) {
-  return trackerToAdd.hasOwnProperty('event') && trackerToAdd.hasOwnProperty('url');
+  return Object.prototype.hasOwnProperty.call(trackerToAdd, 'event') && Object.prototype.hasOwnProperty.call(trackerToAdd, 'url');
 }
 
 function trackersToMap(trackers) {

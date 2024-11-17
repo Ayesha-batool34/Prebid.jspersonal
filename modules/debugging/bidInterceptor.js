@@ -143,7 +143,7 @@ Object.assign(BidInterceptor.prototype, {
     return (bid, ...args) => {
       const response = this.responseDefaults(bid);
       mergeDeep(response, replFn({args: [bid, ...args]}));
-      if (!response.hasOwnProperty('ad') && !response.hasOwnProperty('adUrl')) {
+      if (!Object.prototype.hasOwnProperty.call(response, 'ad') && !Object.prototype.hasOwnProperty.call(response, 'adUrl')) {
         response.ad = this.defaultAd(bid, response);
       }
       response.isDebug = true;

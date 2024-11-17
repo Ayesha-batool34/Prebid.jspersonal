@@ -13,7 +13,7 @@ export function metricsFactory({now = getTime, mkNode = makeNode, mkTimer = make
           return self.dfWalk({
             visit(edge, node) {
               const obj = node[slot];
-              if (obj.hasOwnProperty(name)) {
+              if (Object.prototype.hasOwnProperty.call(obj, name)) {
                 return obj[name];
               }
             }
@@ -40,7 +40,7 @@ export function metricsFactory({now = getTime, mkNode = makeNode, mkTimer = make
               if (edge == null) {
                 node.metrics[name] = value;
               } else {
-                if (!node.groups.hasOwnProperty(name)) {
+                if (!Object.prototype.hasOwnProperty.call(node.groups, name)) {
                   node.groups[name] = [];
                 }
                 node.groups[name].push(value);

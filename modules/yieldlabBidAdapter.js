@@ -383,7 +383,7 @@ function createUserIdAtypesString(eids) {
 function createQueryString(obj) {
   const str = [];
   for (const p in obj) {
-    if (obj.hasOwnProperty(p)) {
+    if (Object.prototype.hasOwnProperty.call(obj, p)) {
       const val = obj[p];
       if (p !== 'schain' && p !== 'iab_content') {
         str.push(encodeURIComponent(p) + '=' + encodeURIComponent(val));
@@ -403,7 +403,7 @@ function createQueryString(obj) {
 function createTargetingString(obj) {
   const str = [];
   for (const p in obj) {
-    if (obj.hasOwnProperty(p)) {
+    if (Object.prototype.hasOwnProperty.call(obj, p)) {
       const key = p;
       const val = obj[p];
       str.push(key + '=' + val);
@@ -569,7 +569,7 @@ function getBidFloor(bid, sizes) {
  * @returns {boolean} Returns true if the object has a property with the given name and the property value is not null or undefined, otherwise false.
  */
 function hasValidProperty(obj, propName) {
-  return obj.hasOwnProperty(propName) && obj[propName] != null;
+  return Object.prototype.hasOwnProperty.call(obj, propName) && obj[propName] != null;
 }
 
 /**

@@ -129,7 +129,7 @@ export const spec = {
     }
     logInfo('onBidWon:', bid);
     ajax(DEFAULT_IMPS_ENDPOINT, null, JSON.stringify(bid), { method: 'POST', mode: 'no-cors', credentials: 'include', headers: { 'Content-Type': 'application/json' } });
-    if (bid.hasOwnProperty('nurl') && bid.nurl.length > 0) {
+    if (Object.prototype.hasOwnProperty.call(bid, 'nurl') && bid.nurl.length > 0) {
       triggerPixel(bid.nurl);
     }
   },

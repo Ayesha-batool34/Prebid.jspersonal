@@ -224,7 +224,7 @@ export const spec = {
 
     const response = serverResponse['body'];
 
-    if (response === undefined || !response.hasOwnProperty('bids')) {
+    if (response === undefined || !Object.prototype.hasOwnProperty.call(response, 'bids')) {
       logError('Sub-optimal JSON received from Quantcast server');
       return [];
     }

@@ -9,7 +9,7 @@ let expiryHandle;
 let dsaAuctions = {};
 
 export const addBidResponseHook = timedBidResponseHook('dsa', function (fn, adUnitCode, bid, reject) {
-  if (!dsaAuctions.hasOwnProperty(bid.auctionId)) {
+  if (!Object.prototype.hasOwnProperty.call(dsaAuctions, bid.auctionId)) {
     dsaAuctions[bid.auctionId] = auctionManager.index.getAuction(bid)?.getFPD?.()?.global?.regs?.ext?.dsa;
   }
   const dsaRequest = dsaAuctions[bid.auctionId];

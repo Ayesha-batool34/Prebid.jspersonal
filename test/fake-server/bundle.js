@@ -25,7 +25,7 @@ const getBundle = (() => {
     modules = Array.isArray(modules) ? [...modules] : [modules];
     modules.sort();
     const key = modules.join(',');
-    if (!cache.hasOwnProperty(key)) {
+    if (!Object.prototype.hasOwnProperty.call(cache, key)) {
       cache[key] = makeBundle(modules, dev).then(replaceStrings);
     }
     return cache[key];

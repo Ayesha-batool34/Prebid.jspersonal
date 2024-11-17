@@ -75,7 +75,7 @@ describe('Real time module', function () {
     eventHandlers = {};
     sandbox = sinon.sandbox.create();
     sandbox.stub(events, 'on').callsFake((event, handler) => {
-      if (!eventHandlers.hasOwnProperty(event)) {
+      if (!Object.prototype.hasOwnProperty.call(eventHandlers, event)) {
         eventHandlers[event] = [];
       }
       eventHandlers[event].push(handler);

@@ -167,7 +167,7 @@ export function getRealTimeData(bidConfig, onDone, rtdConfig, userConsent) {
   const userIds = {};
 
   const allUserIds = getGlobal().getUserIds();
-  if (allUserIds.hasOwnProperty('hadronId')) {
+  if (Object.prototype.hasOwnProperty.call(allUserIds, 'hadronId')) {
     userIds['hadronId'] = allUserIds.hadronId;
     logInfo(LOG_PREFIX, 'hadronId user module found', allUserIds.hadronId);
   } else {

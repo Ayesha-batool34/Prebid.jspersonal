@@ -106,7 +106,7 @@ export function resolveStatus({labels = [], labelAll = false, activeLabels = []}
 
   let results = {
     active: (
-      !Object.keys(SIZE_PROPS).find(mediaType => mediaTypes.hasOwnProperty(mediaType))
+      !Object.keys(SIZE_PROPS).find(mediaType => Object.prototype.hasOwnProperty.call(mediaTypes, mediaType))
     ) || (
       hasSize && (
         labels.length === 0 || (

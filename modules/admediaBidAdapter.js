@@ -83,7 +83,7 @@ export const spec = {
       serverResponse.forEach((bid) => {
         const bidResponse = {};
         for (const requiredKey of requiredKeys) {
-          if (!bid.hasOwnProperty(requiredKey)) {
+          if (!Object.prototype.hasOwnProperty.call(bid, requiredKey)) {
             return [];
           }
           bidResponse[requiredKey] = bid[requiredKey];

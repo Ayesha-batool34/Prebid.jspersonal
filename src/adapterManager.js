@@ -709,7 +709,7 @@ adapterManager.callAdRenderSucceededBidder = function (bidder, bid) {
 
 function resolveAlias(alias) {
   const seen = new Set();
-  while (_aliasRegistry.hasOwnProperty(alias) && !seen.has(alias)) {
+  while (Object.prototype.hasOwnProperty.call(_aliasRegistry, alias) && !seen.has(alias)) {
     seen.add(alias);
     alias = _aliasRegistry[alias];
   }
@@ -722,7 +722,7 @@ function resolveAlias(alias) {
 adapterManager.callDataDeletionRequest = hook('sync', function (...args) {
   const method = 'onDataDeletionRequest';
   Object.keys(_bidderRegistry)
-    .filter((bidder) => !_aliasRegistry.hasOwnProperty(bidder))
+    .filter((bidder) => !Object.prototype.hasOwnProperty.call(_aliasRegistry, bidder))
     .forEach(bidder => {
       const target = getBidderMethod(bidder, method);
       if (target != null) {

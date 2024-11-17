@@ -181,7 +181,7 @@ export function handleGPPData(data = {}) {
 export function handleClientHints(clientHints) {
   const chParams = {};
   for (const key in clientHints) {
-    if (clientHints.hasOwnProperty(key) && clientHints[key] !== '') {
+    if (Object.prototype.hasOwnProperty.call(clientHints, key) && clientHints[key] !== '') {
       if (['brands', 'fullVersionList'].includes(key)) {
         let handledParam = '';
         clientHints[key].forEach((element, index) => {

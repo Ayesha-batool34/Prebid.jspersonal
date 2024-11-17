@@ -448,7 +448,7 @@ export const spec = {
     // reduce param values from all slot objects into an array of values in a single object
     const oCombinedSlotUrlParams = aSlotUrlParams.reduce(function(oCombinedParams, oSlotUrlParams, iIndex) {
       Object.keys(oSlotUrlParams).forEach(function(param) {
-        if (!oCombinedParams.hasOwnProperty(param)) {
+        if (!Object.prototype.hasOwnProperty.call(oCombinedParams, param)) {
           oCombinedParams[param] = new Array(aSlotUrlParams.length); // initialize array;
         }
         // insert into the proper element of the array
@@ -1260,7 +1260,7 @@ export function hasValidSupplyChainParams(schain) {
   if (!schain.nodes) return isValid;
   isValid = schain.nodes.reduce((status, node) => {
     if (!status) return status;
-    return requiredFields.every(field => node.hasOwnProperty(field));
+    return requiredFields.every(field => Object.prototype.hasOwnProperty.call(node, field));
   }, true);
   if (!isValid) logError('Rubicon: required schain params missing');
   return isValid;

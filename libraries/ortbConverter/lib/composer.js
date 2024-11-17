@@ -30,9 +30,9 @@ export function compose(components, overrides = {}) {
     SORTED.set(components, sorted.map(([name, cmp]) => [name, cmp.fn]))
   }
   const fns = SORTED.get(components)
-    .filter(([name]) => !overrides.hasOwnProperty(name) || overrides[name])
+    .filter(([name]) => !Object.prototype.hasOwnProperty.call(overrides, name) || overrides[name])
     .map(function ([name, fn]) {
-      return overrides.hasOwnProperty(name) ? overrides[name].bind(this, fn) : fn;
+      return Object.prototype.hasOwnProperty.call(overrides, name) ? overrides[name].bind(this, fn) : fn;
     });
   return function () {
     const args = Array.from(arguments);

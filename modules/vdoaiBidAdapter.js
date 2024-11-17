@@ -67,7 +67,7 @@ export function isSchainValid(schain) {
   if (!schain || !schain.nodes) return isValid;
   isValid = schain.nodes.reduce((status, node) => {
     if (!status) return status;
-    return requiredFields.every(field => node.hasOwnProperty(field));
+    return requiredFields.every(field => Object.prototype.hasOwnProperty.call(node, field));
   }, true);
   if (!isValid) {
     logError('VDO.AI: required schain params missing');

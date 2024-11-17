@@ -192,7 +192,7 @@ function getFiltered(data, minscore) {
   try {
     if (data && data.segments) {
       for (let segId in data.segments) {
-        if (data.segments.hasOwnProperty(segId)) {
+        if (Object.prototype.hasOwnProperty.call(data.segments, segId)) {
           relevadData.segments.push(data.segments[segId].toString());
         }
       }
@@ -213,7 +213,7 @@ function getFiltered(data, minscore) {
 export function addRtdData(reqBids, data, moduleConfig) {
   moduleConfig = moduleConfig || {};
   moduleConfig.params = moduleConfig.params || {};
-  const globalMinScore = moduleConfig.params.hasOwnProperty('minscore') ? moduleConfig.params.minscore : 30;
+  const globalMinScore = Object.prototype.hasOwnProperty.call(moduleConfig.params, 'minscore') ? moduleConfig.params.minscore : 30;
   const relevadData = getFiltered(data, globalMinScore);
   const relevadList = relevadData.segments.concat(relevadData.categories.pagecat);
   // Publisher side bidder whitelist
@@ -226,7 +226,7 @@ export function addRtdData(reqBids, data, moduleConfig) {
   noWhitelists && setGlobalOrtb2(reqBids.ortb2Fragments?.global, relevadData);
 
   // Target GAM/GPT
-  let setgpt = moduleConfig.params.setgpt || !moduleConfig.params.hasOwnProperty('setgpt');
+  let setgpt = moduleConfig.params.setgpt || !Object.prototype.hasOwnProperty.call(moduleConfig.params, 'setgpt');
   if (moduleConfig.dryrun || (typeof window.googletag !== 'undefined' && setgpt)) {
     try {
       if (window.googletag && window.googletag.pubads && (typeof window.googletag.pubads === 'function')) {
@@ -246,8 +246,8 @@ export function addRtdData(reqBids, data, moduleConfig) {
   adUnits.forEach(adUnit => {
     noWhitelists && deepSetValue(adUnit, 'ortb2Imp.ext.data.relevad_rtd', relevadList);
 
-    adUnit.hasOwnProperty('bids') && adUnit.bids.forEach(bid => {
-      let bidderIndex = (moduleConfig.params.hasOwnProperty('bidders') ? findIndex(moduleConfig.params.bidders, function (i) {
+    Object.prototype.hasOwnProperty.call(adUnit, 'bids') && adUnit.bids.forEach(bid => {
+      let bidderIndex = (Object.prototype.hasOwnProperty.call(moduleConfig.params, 'bidders') ? findIndex(moduleConfig.params.bidders, function (i) {
         return i.bidder === bid.bidder;
       }) : false);
       const indexFound = !!(typeof bidderIndex == 'number' && bidderIndex >= 0);
@@ -255,7 +255,7 @@ export function addRtdData(reqBids, data, moduleConfig) {
         if (
           !biddersParamsExist ||
             (indexFound &&
-              (!moduleConfig.params.bidders[bidderIndex].hasOwnProperty('adUnitCodes') ||
+              (!Object.prototype.hasOwnProperty.call(moduleConfig.params.bidders[bidderIndex], 'adUnitCodes') ||
                 moduleConfig.params.bidders[bidderIndex].adUnitCodes.indexOf(adUnit.code) !== -1
               )
             )

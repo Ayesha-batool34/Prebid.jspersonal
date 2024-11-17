@@ -202,7 +202,7 @@ describe('The DFP video support module', function () {
         it('should not be included if not available', () => {
           ppid = undefined;
           const q = getQueryParams(opts);
-          expect(q.hasOwnProperty('ppid')).to.be.false;
+          expect(Object.prototype.hasOwnProperty.call(q, 'ppid')).to.be.false;
         })
       })
     })
@@ -331,7 +331,7 @@ describe('The DFP video support module', function () {
               })[param]).to.eql('OG');
             });
             it('does not fill if param has no value', () => {
-              expect(getQueryParams().hasOwnProperty(param)).to.be.false;
+              expect(Object.prototype.hasOwnProperty.call(getQueryParams(), param)).to.be.false;
             })
           })
         })

@@ -218,7 +218,7 @@ function getBidAdapter() {
     const video = {};
 
     VIDEO_ORTB_PARAMS.forEach((param) => {
-      if (videoParams.hasOwnProperty(param)) {
+      if (Object.prototype.hasOwnProperty.call(videoParams, param)) {
         video[param] = videoParams[param];
       }
     });
