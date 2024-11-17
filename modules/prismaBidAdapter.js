@@ -102,7 +102,7 @@ export const spec = {
     const bidResponses = [];
     let bidResponse = null;
     let value = null;
-    if (serverBody.hasOwnProperty('responses')) {
+    if (Object.prototype.hasOwnProperty.call(serverBody, 'responses')) {
       Object.keys(serverBody['responses']).forEach(key => {
         value = serverBody['responses'][key];
         const url = `${CACHE_URL}?uuid=${value['uuid']}`;
@@ -153,8 +153,8 @@ export const spec = {
    * @return {UserSync[]} The user syncs which should be dropped.
    */
   getUserSyncs: function(syncOptions, serverResponses, gdprConsent, uspConsent) {
-    if (typeof serverResponses === 'object' && serverResponses != null && serverResponses.length > 0 && serverResponses[0].hasOwnProperty('body') &&
-        serverResponses[0].body.hasOwnProperty('cookies') && typeof serverResponses[0].body.cookies === 'object') {
+    if (typeof serverResponses === 'object' && serverResponses != null && serverResponses.length > 0 && Object.prototype.hasOwnProperty.call(serverResponses[0], 'body') &&
+        Object.prototype.hasOwnProperty.call(serverResponses[0].body, 'cookies') && typeof serverResponses[0].body.cookies === 'object') {
       return serverResponses[0].body.cookies.slice(0, 5);
     } else {
       return [];
@@ -168,10 +168,10 @@ export const spec = {
   onBidWon: function(bid) {
     // fires a pixel to confirm a winning bid
     const params = { type: 'prebid', mediatype: 'banner' };
-    if (bid.hasOwnProperty('prisma')) {
-      if (bid.prisma.hasOwnProperty('ssp')) params.ssp = bid.prisma.ssp;
-      if (bid.prisma.hasOwnProperty('tagId')) params.tag_id = bid.prisma.tagId;
-      if (bid.prisma.hasOwnProperty('consent')) params.consent = bid.prisma.consent;
+    if (Object.prototype.hasOwnProperty.call(bid, 'prisma')) {
+      if (Object.prototype.hasOwnProperty.call(bid.prisma, 'ssp')) params.ssp = bid.prisma.ssp;
+      if (Object.prototype.hasOwnProperty.call(bid.prisma, 'tagId')) params.tag_id = bid.prisma.tagId;
+      if (Object.prototype.hasOwnProperty.call(bid.prisma, 'consent')) params.consent = bid.prisma.consent;
     };
     params.price = bid.cpm;
     const url = `${METRICS_TRACKER_URL}?${new URLSearchParams(params).toString()}`;

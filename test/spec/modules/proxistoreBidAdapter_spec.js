@@ -111,10 +111,10 @@ describe('ProxistoreBidAdapter', function () {
     });
     it('should have a property a length of bids equal to one if there is only one bid', function () {
       const data = JSON.parse(request.data);
-      expect(data.hasOwnProperty('bids')).to.be.true;
+      expect(Object.prototype.hasOwnProperty.call(data, 'bids')).to.be.true;
       expect(data.bids).to.be.an('array');
       expect(data.bids.length).equal(1);
-      expect(data.bids[0].hasOwnProperty('id')).to.be.true;
+      expect(Object.prototype.hasOwnProperty.call(data.bids[0], 'id')).to.be.true;
       expect(data.bids[0].sizes).to.be.an('array');
     });
     it('should correctly set bidfloor on imp when getfloor in scope', function () {

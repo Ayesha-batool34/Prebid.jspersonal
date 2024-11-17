@@ -50,8 +50,8 @@ export var spec = {
       return false;
     }
     // video bid request validation
-    if (bid.params.hasOwnProperty('video')) {
-      if (!bid.params.video.hasOwnProperty('mimes') || !utils.isArray(bid.params.video.mimes) || bid.params.video.mimes.length === 0) {
+    if (Object.prototype.hasOwnProperty.call(bid.params, 'video')) {
+      if (!Object.prototype.hasOwnProperty.call(bid.params.video, 'mimes') || !utils.isArray(bid.params.video.mimes) || bid.params.video.mimes.length === 0) {
         utils.logWarn(LOG_WARN_PREFIX + 'Error: For video ads, mimes is mandatory and must specify atlease 1 mime value. Call to OpenBid will not be sent for ad unit:' + JSON.stringify(bid));
         return false;
       }
@@ -232,7 +232,7 @@ export var spec = {
     var impression = {};
     var bObj;
     var vObj;
-    var sizes = bid.hasOwnProperty('sizes') ? bid.sizes : [];
+    var sizes = Object.prototype.hasOwnProperty.call(bid, 'sizes') ? bid.sizes : [];
     var mediaTypes = '';
     var format = [];
     var params = bid && bid.params ? bid.params : null;
@@ -245,7 +245,7 @@ export var spec = {
     if (params.bidFloor) {
       impression.bidfloor = params.bidFloor;
     }
-    if (bid.hasOwnProperty('mediaTypes')) {
+    if (Object.prototype.hasOwnProperty.call(bid, 'mediaTypes')) {
       for (mediaTypes in bid.mediaTypes) {
         switch (mediaTypes) {
           case BANNER:
@@ -281,8 +281,8 @@ export var spec = {
       impression.banner = bObj;
     }
     spec._setFloor(impression, bid);
-    return impression.hasOwnProperty(BANNER) ||
-      impression.hasOwnProperty(VIDEO) ? impression : undefined;
+    return Object.prototype.hasOwnProperty.call(impression, BANNER) ||
+      Object.prototype.hasOwnProperty.call(impression, VIDEO) ? impression : undefined;
   },
 
   /**
@@ -293,7 +293,7 @@ export var spec = {
     // get lowest floor from floorModule
     if (typeof bid.getFloor === 'function') {
       [BANNER, VIDEO].forEach(mediaType => {
-        if (impObj.hasOwnProperty(mediaType)) {
+        if (Object.prototype.hasOwnProperty.call(impObj, mediaType)) {
           let floorInfo = bid.getFloor({ currency: impObj.bidfloorcur, mediaType: mediaType, size: '*' });
           if (typeof floorInfo === 'object' && floorInfo.currency === impObj.bidfloorcur && !isNaN(parseInt(floorInfo.floor))) {
             let mediaTypeFloor = parseFloat(floorInfo.floor);
@@ -348,8 +348,8 @@ export var spec = {
                     case BANNER:
                       break;
                     case VIDEO:
-                      newBid.width = bid.hasOwnProperty('w') ? bid.w : robj.video.w;
-                      newBid.height = bid.hasOwnProperty('h') ? bid.h : robj.video.h;
+                      newBid.width = Object.prototype.hasOwnProperty.call(bid, 'w') ? bid.w : robj.video.w;
+                      newBid.height = Object.prototype.hasOwnProperty.call(bid, 'h') ? bid.h : robj.video.h;
                       newBid.vastXml = bid.adm;
                       break;
                   }

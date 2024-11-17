@@ -14,10 +14,10 @@ export function processorRegistry() {
         throw new Error(`ORTB processor type must be one of: ${PROCESSOR_TYPES.join(', ')}`)
       }
       dialects.forEach(dialect => {
-        if (!processors.hasOwnProperty(dialect)) {
+        if (!Object.prototype.hasOwnProperty.call(processors, dialect)) {
           processors[dialect] = {};
         }
-        if (!processors[dialect].hasOwnProperty(type)) {
+        if (!Object.prototype.hasOwnProperty.call(processors[dialect], type)) {
           processors[dialect][type] = {};
         }
         processors[dialect][type][name] = {

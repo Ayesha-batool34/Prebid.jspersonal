@@ -4,7 +4,7 @@ export function getReplacer(adId, {assets = [], ortb, nativeKeys = {}}) {
   const assetValues = Object.fromEntries((assets).map(({key, value}) => [key, value]));
   let repl = Object.fromEntries(
     Object.entries(nativeKeys).flatMap(([name, key]) => {
-      const value = assetValues.hasOwnProperty(name) ? assetValues[name] : undefined;
+      const value = Object.prototype.hasOwnProperty.call(assetValues, name) ? assetValues[name] : undefined;
       return [
         [`##${key}##`, value],
         [`${key}:${adId}`, value]

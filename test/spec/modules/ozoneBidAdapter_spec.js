@@ -3242,7 +3242,7 @@ describe('ozone Adapter', function () {
       const request = spec.buildRequests(instreamRequestsObj, validBidderRequest1OutstreamVideo2020.bidderRequest);
       const result = spec.interpretResponse(getCleanValidVideoResponse(), instreamBidderReq);
       const bid = result[0];
-      expect(bid.hasOwnProperty('renderer')).to.be.false;
+      expect(Object.prototype.hasOwnProperty.call(bid, 'renderer')).to.be.false;
     });
     it('should correctly parse response where there are more bidders than ad slots', function () {
       const request = spec.buildRequests(validBidRequests, validBidderRequest);

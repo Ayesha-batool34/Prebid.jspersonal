@@ -806,7 +806,7 @@ describe('yieldlabBidAdapter', () => {
         },
       });
       const result = spec.interpretResponse({body: [NATIVE_RESPONSE_WITHOUT_ICON]}, {validBidRequests: [NATIVE_REQUEST()], queryParams: REQPARAMS});
-      expect(result[0].native.hasOwnProperty('icon')).to.be.false;
+      expect(Object.prototype.hasOwnProperty.call(result[0].native, 'icon')).to.be.false;
       expect(result[0].native.title).to.equal('This is a great headline');
     });
 

@@ -744,18 +744,18 @@ describe('gumgumAdapter', function () {
       const bidRequest = spec.buildRequests(bidRequests, { refererInfo: { page: 'https://www.prebid.org/?param1=foo&param2=bar&param3=baz' } })[0];
 
       // no params are in object
-      expect(bidRequest.data.hasOwnProperty('eAdBuyId')).to.be.false;
-      expect(bidRequest.data.hasOwnProperty('adBuyId')).to.be.false;
-      expect(bidRequest.data.hasOwnProperty('ggdeal')).to.be.false;
+      expect(Object.prototype.hasOwnProperty.call(bidRequest.data, 'eAdBuyId')).to.be.false;
+      expect(Object.prototype.hasOwnProperty.call(bidRequest.data, 'adBuyId')).to.be.false;
+      expect(Object.prototype.hasOwnProperty.call(bidRequest.data, 'ggdeal')).to.be.false;
     });
 
     it('should handle encrypted ad buy id', function () {
       const bidRequest = spec.buildRequests(bidRequests, { refererInfo: { page: 'https://www.prebid.org/?param1=foo&ggad=bar&param3=baz' } })[0];
 
       // correct params are in object
-      expect(bidRequest.data.hasOwnProperty('eAdBuyId')).to.be.true;
-      expect(bidRequest.data.hasOwnProperty('adBuyId')).to.be.false;
-      expect(bidRequest.data.hasOwnProperty('ggdeal')).to.be.false;
+      expect(Object.prototype.hasOwnProperty.call(bidRequest.data, 'eAdBuyId')).to.be.true;
+      expect(Object.prototype.hasOwnProperty.call(bidRequest.data, 'adBuyId')).to.be.false;
+      expect(Object.prototype.hasOwnProperty.call(bidRequest.data, 'ggdeal')).to.be.false;
 
       // params are stripped from pu property
       expect(bidRequest.data.pu.includes('ggad')).to.be.false;
@@ -765,9 +765,9 @@ describe('gumgumAdapter', function () {
       const bidRequest = spec.buildRequests(bidRequests, { refererInfo: { page: 'https://www.prebid.org/?param1=foo&ggad=123&param3=baz' } })[0];
 
       // correct params are in object
-      expect(bidRequest.data.hasOwnProperty('eAdBuyId')).to.be.false;
-      expect(bidRequest.data.hasOwnProperty('adBuyId')).to.be.true;
-      expect(bidRequest.data.hasOwnProperty('ggdeal')).to.be.false;
+      expect(Object.prototype.hasOwnProperty.call(bidRequest.data, 'eAdBuyId')).to.be.false;
+      expect(Object.prototype.hasOwnProperty.call(bidRequest.data, 'adBuyId')).to.be.true;
+      expect(Object.prototype.hasOwnProperty.call(bidRequest.data, 'ggdeal')).to.be.false;
 
       // params are stripped from pu property
       expect(bidRequest.data.pu.includes('ggad')).to.be.false;
@@ -777,9 +777,9 @@ describe('gumgumAdapter', function () {
       const bidRequest = spec.buildRequests(bidRequests, { refererInfo: { page: 'https://www.prebid.org/?ggdeal=foo&ggad=bar&param3=baz' } })[0];
 
       // correct params are in object
-      expect(bidRequest.data.hasOwnProperty('eAdBuyId')).to.be.true;
-      expect(bidRequest.data.hasOwnProperty('adBuyId')).to.be.false;
-      expect(bidRequest.data.hasOwnProperty('ggdeal')).to.be.true;
+      expect(Object.prototype.hasOwnProperty.call(bidRequest.data, 'eAdBuyId')).to.be.true;
+      expect(Object.prototype.hasOwnProperty.call(bidRequest.data, 'adBuyId')).to.be.false;
+      expect(Object.prototype.hasOwnProperty.call(bidRequest.data, 'ggdeal')).to.be.true;
 
       // params are stripped from pu property
       expect(bidRequest.data.pu.includes('ggad')).to.be.false;

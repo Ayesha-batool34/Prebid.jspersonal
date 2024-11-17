@@ -108,7 +108,7 @@ export function objectTransformer(rules) {
 
 export function sessionedApplies(session, ...args) {
   return function applies(rule) {
-    if (!session.hasOwnProperty(rule.name)) {
+    if (!Object.prototype.hasOwnProperty.call(session, rule.name)) {
       session[rule.name] = !!rule.applies(...args);
     }
     return session[rule.name];

@@ -755,7 +755,7 @@ describe('the price floors module', function () {
     let exposedAdUnits;
     const validateBidRequests = (getFloorExpected, FloorDataExpected) => {
       exposedAdUnits.forEach(adUnit => adUnit.bids.forEach(bid => {
-        expect(bid.hasOwnProperty('getFloor')).to.equal(getFloorExpected);
+        expect(Object.prototype.hasOwnProperty.call(bid, 'getFloor')).to.equal(getFloorExpected);
         sinon.assert.match(bid.floorData, FloorDataExpected);
       }));
     };
@@ -872,7 +872,7 @@ describe('the price floors module', function () {
       });
       runStandardAuction()
       const bidRequestData = exposedAdUnits[0].bids.find(bid => bid.bidder === 'someBidder');
-      expect(bidRequestData.hasOwnProperty('getFloor')).to.equal(false);
+      expect(Object.prototype.hasOwnProperty.call(bidRequestData, 'getFloor')).to.equal(false);
       sinon.assert.match(bidRequestData.floorData, {
         skipped: false,
         floorMin: undefined,

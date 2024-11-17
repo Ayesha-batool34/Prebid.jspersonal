@@ -136,10 +136,10 @@ function generateBidRequestsFromAdUnits(bidRequests, bidRequestId, adUnitContext
     deviceObj = {};
     Object.keys(deviceObjBid.params.device)
       .forEach(param => deviceObj[param] = deviceObjBid.params.device[param]);
-    if (!deviceObjBid.hasOwnProperty('ua')) {
+    if (!Object.prototype.hasOwnProperty.call(deviceObjBid, 'ua')) {
       deviceObj.ua = navigator.userAgent;
     }
-    if (!deviceObjBid.hasOwnProperty('language')) {
+    if (!Object.prototype.hasOwnProperty.call(deviceObjBid, 'language')) {
       deviceObj.language = navigator.language;
     }
   } else {

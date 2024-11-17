@@ -346,7 +346,7 @@ function bundle(dev, moduleArr) {
 
 function testTaskMaker(options = {}) {
   ['watch', 'file', 'browserstack', 'notest'].forEach(opt => {
-    options[opt] = options.hasOwnProperty(opt) ? options[opt] : argv[opt];
+    options[opt] = Object.prototype.hasOwnProperty.call(options, opt) ? options[opt] : argv[opt];
   })
 
   options.disableFeatures = options.disableFeatures || helpers.getDisabledFeatures();

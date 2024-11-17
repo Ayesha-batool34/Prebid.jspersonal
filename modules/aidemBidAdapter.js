@@ -187,8 +187,8 @@ function hasValidVideoParameters(bidRequest) {
   const adUnitsParameters = deepAccess(bidRequest, 'mediaTypes.video');
   const bidderParameter = deepAccess(bidRequest, 'params.video');
   for (let property of REQUIRED_VIDEO_PARAMS) {
-    const hasAdUnitParameter = adUnitsParameters.hasOwnProperty(property);
-    const hasBidderParameter = bidderParameter && bidderParameter.hasOwnProperty(property);
+    const hasAdUnitParameter = Object.prototype.hasOwnProperty.call(adUnitsParameters, property);
+    const hasBidderParameter = bidderParameter && Object.prototype.hasOwnProperty.call(bidderParameter, property);
     if (!hasAdUnitParameter && !hasBidderParameter) {
       logError(`AIDEM Bid Adapter: ${property} is not included in either the adunit or params level`, { bidder: BIDDER_CODE, code: ERROR_CODES.PROPERTY_NOT_INCLUDED });
       valid = false;

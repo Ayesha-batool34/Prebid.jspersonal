@@ -109,7 +109,7 @@ export const spec = {
           referrer: deepAccess(request, 'refererInfo.page')
         };
 
-        if (response.hasOwnProperty(NATIVE)) {
+        if (Object.prototype.hasOwnProperty.call(response, NATIVE)) {
           bid[NATIVE] = {
             title: response[NATIVE].title,
             body: response[NATIVE].body,

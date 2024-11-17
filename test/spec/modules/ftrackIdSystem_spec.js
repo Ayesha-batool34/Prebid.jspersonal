@@ -252,7 +252,7 @@ describe('FTRACK ID System', () => {
         window.testTimer = function () {
           // Sinon fake server is NOT changing the readyState to 4, so instead
           // we are forcing the callback to run and just passing in the expected Object
-          if (!forceCallback && window.hasOwnProperty('D9r')) {
+          if (!forceCallback && Object.prototype.hasOwnProperty.call(window, 'D9r')) {
             window.D9r.callback({ 'DeviceID': ['<DEVICE_ID>'], 'SingleDeviceID': ['<SINGLE_DEVICE_ID>'] });
             forceCallback = true;
           }

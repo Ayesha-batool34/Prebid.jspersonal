@@ -78,7 +78,7 @@ function fixRequestParamForServer(key, value) {
   };
 
   // if param is not in list we do not change it (return it as is)
-  if (!parametersMap.hasOwnProperty(key)) {
+  if (!Object.prototype.hasOwnProperty.call(parametersMap, key)) {
     return {
       value: value,
       fromUser: true
@@ -134,7 +134,7 @@ function buildRequests(validBidRequests, bidderRequest) {
       if (bidRequest.params) {
         for (let key in bidRequest.params) {
           // loop over params and remove empty/untouched values
-          if (bidRequest.params.hasOwnProperty(key)) {
+          if (Object.prototype.hasOwnProperty.call(bidRequest.params, key)) {
             // if debug we update url string to get core debug version
             if (key === 'debug' && bidRequest.params[key] === true) {
               debug = true;

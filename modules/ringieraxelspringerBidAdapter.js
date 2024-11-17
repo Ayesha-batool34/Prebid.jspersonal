@@ -20,7 +20,7 @@ function parseParams(params, bidderRequest) {
   const newParams = {};
   if (params.customParams && typeof params.customParams === 'object') {
     for (const param in params.customParams) {
-      if (params.customParams.hasOwnProperty(param)) {
+      if (Object.prototype.hasOwnProperty.call(params.customParams, param)) {
         newParams[param] = params.customParams[param];
       }
     }
@@ -55,7 +55,7 @@ function parseParams(params, bidderRequest) {
   }
   if (pageContext.keyValues && typeof pageContext.keyValues === 'object') {
     for (const param in pageContext.keyValues) {
-      if (pageContext.keyValues.hasOwnProperty(param)) {
+      if (Object.prototype.hasOwnProperty.call(pageContext.keyValues, param)) {
         const kvName = 'kv' + param;
         newParams[kvName] = pageContext.keyValues[param];
       }

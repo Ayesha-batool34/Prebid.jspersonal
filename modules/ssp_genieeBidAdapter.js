@@ -139,7 +139,7 @@ function makeCommonRequestData(bid, geparameter, refererInfo) {
       : '',
     referer: refererInfo?.ref || encodeURIComponentIncludeSingleQuotation(geparameter[GEPARAMS_KEY.REFERRER]) || '',
     topframe: window.parent == window.self ? 1 : 0,
-    cur: bid.params.hasOwnProperty('currency') ? bid.params.currency : DEFAULT_CURRENCY,
+    cur: Object.prototype.hasOwnProperty.call(bid.params, 'currency') ? bid.params.currency : DEFAULT_CURRENCY,
     requestid: bid.bidId,
     ua: navigator.userAgent,
     tpaf: 1,
@@ -398,7 +398,7 @@ export const spec = {
     let successBid;
     successBid = serverResponse.body || {};
 
-    if (successBid.hasOwnProperty(zoneId)) {
+    if (Object.prototype.hasOwnProperty.call(successBid, zoneId)) {
       const bid = successBid[zoneId];
       bidResponses.push(makeBannerBidResponse(bid, bidderRequest));
     }

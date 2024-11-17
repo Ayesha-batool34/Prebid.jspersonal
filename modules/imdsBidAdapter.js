@@ -27,10 +27,10 @@ export const spec = {
 
   isVideoBid: function(bid) {
     return bid.mediaTypes !== undefined &&
-      bid.mediaTypes.hasOwnProperty('video');
+      Object.prototype.hasOwnProperty.call(bid.mediaTypes, 'video');
   },
   isBidRequestValid: function(bid) {
-    const hasRequiredParams = bid && bid.params && (bid.params.hasOwnProperty('placementId') || bid.params.hasOwnProperty('tagId')) && bid.params.hasOwnProperty('seatId');
+    const hasRequiredParams = bid && bid.params && (Object.prototype.hasOwnProperty.call(bid.params, 'placementId') || Object.prototype.hasOwnProperty.call(bid.params, 'tagId')) && Object.prototype.hasOwnProperty.call(bid.params, 'seatId');
     const hasAdSizes = bid && getAdUnitSizes(bid).filter(size => BLOCKED_AD_SIZES.indexOf(size.join('x')) === -1).length > 0
     return !!(hasRequiredParams && hasAdSizes);
   },

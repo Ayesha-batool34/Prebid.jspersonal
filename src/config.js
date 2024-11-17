@@ -74,7 +74,7 @@ function attachProperties(config, useDefaultValues = true) {
   }
 
   function setProp(name, val) {
-    if (!values.hasOwnProperty(name)) {
+    if (!Object.prototype.hasOwnProperty.call(values, name)) {
       Object.defineProperty(config, name, {enumerable: true});
     }
     values[name] = val;
@@ -143,8 +143,8 @@ function attachProperties(config, useDefaultValues = true) {
       .map(([k, def]) => [k, Object.assign({
         get: getProp.bind(null, k),
         set: setProp.bind(null, k),
-        enumerable: values.hasOwnProperty(k),
-        configurable: !values.hasOwnProperty(k)
+        enumerable: Object.prototype.hasOwnProperty.call(values, k),
+        configurable: !Object.prototype.hasOwnProperty.call(values, k)
       }, def)])
   ));
 

@@ -259,7 +259,7 @@ function getBidfloor(bidRequest) {
 
   if (typeof bidRequest.getFloor === 'function') {
     SUPPORTED_MEDIA_TYPES.forEach(type => {
-      if (bidRequest.hasOwnProperty(type)) {
+      if (Object.prototype.hasOwnProperty.call(bidRequest, type)) {
         const floorInfo = bidRequest.getFloor({
           currency: DEFAULT_CURRENCY,
           mediaType: type,
@@ -302,7 +302,7 @@ function mapNative(bidRequest) {
     const assets = [];
 
     Object.keys(adUnitNativeAssets).forEach((assetCode) => {
-      if (NATIVE_ASSETS.hasOwnProperty(assetCode)) {
+      if (Object.prototype.hasOwnProperty.call(NATIVE_ASSETS, assetCode)) {
         const nativeAsset = NATIVE_ASSETS[assetCode];
         const adUnitAssetParams = adUnitNativeAssets[assetCode];
         const asset = mapAsset(assetCode, adUnitAssetParams, nativeAsset);

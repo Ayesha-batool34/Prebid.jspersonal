@@ -269,9 +269,9 @@ function getUserSyncs(syncOptions, serverResponses, gdprConsent, uspConsent) {
   if (typeof serverResponses === 'object' &&
   serverResponses != null &&
   serverResponses.length > 0 &&
-  serverResponses[0].hasOwnProperty('body') &&
-  serverResponses[0].body.hasOwnProperty('ext') &&
-  serverResponses[0].body.ext.hasOwnProperty('cookies') &&
+  Object.prototype.hasOwnProperty.call(serverResponses[0], 'body') &&
+  Object.prototype.hasOwnProperty.call(serverResponses[0].body, 'ext') &&
+  Object.prototype.hasOwnProperty.call(serverResponses[0].body.ext, 'cookies') &&
   typeof serverResponses[0].body.ext.cookies === 'object') {
     return serverResponses[0].body.ext.cookies.slice(0, 5);
   } else {

@@ -320,7 +320,7 @@ function getEids(userId) {
         break;
 
       case 'object':
-        const idProp = idProperties.filter(prop => eid.hasOwnProperty(prop));
+        const idProp = idProperties.filter(prop => Object.prototype.hasOwnProperty.call(eid, prop));
         idProp.length && (eids[provider] = eid[idProp[0]]);
         break;
     }

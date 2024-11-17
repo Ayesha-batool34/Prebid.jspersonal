@@ -340,7 +340,7 @@ function buildOneRequest(validBidRequests, bidderRequest) {
     let videoParams = deepAccess(validBidRequests, 'params.video');
     if (typeof videoParams !== 'undefined') {
       for (var key in VIDEO_CUSTOM_PARAMS) {
-        if (videoParams.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(videoParams, key)) {
           video[key] = _checkParamDataType(key, videoParams[key], VIDEO_CUSTOM_PARAMS[key]);
         }
       }

@@ -14,8 +14,8 @@ export const SUPPORTED_MEDIA_TYPES = {
 export function extPrebidMediaType(bidResponse, bid, context) {
   let mediaType = context.mediaType;
   if (!mediaType) {
-    mediaType = ORTB_MTYPES.hasOwnProperty(bid.mtype) ? ORTB_MTYPES[bid.mtype] : bid.ext?.prebid?.type
-    if (!SUPPORTED_MEDIA_TYPES.hasOwnProperty(mediaType)) {
+    mediaType = Object.prototype.hasOwnProperty.call(ORTB_MTYPES, bid.mtype) ? ORTB_MTYPES[bid.mtype] : bid.ext?.prebid?.type
+    if (!Object.prototype.hasOwnProperty.call(SUPPORTED_MEDIA_TYPES, mediaType)) {
       mediaType = BANNER;
     }
   }

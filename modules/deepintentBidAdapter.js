@@ -24,8 +24,8 @@ export const spec = {
     let valid = false;
     if (bid && bid.params && bid.params.tagId) {
       if (typeof bid.params.tagId === 'string' || bid.params.tagId instanceof String) {
-        if (bid.hasOwnProperty('mediaTypes') && bid.mediaTypes.hasOwnProperty(VIDEO)) {
-          if (bid.mediaTypes[VIDEO].hasOwnProperty('context')) {
+        if (Object.prototype.hasOwnProperty.call(bid, 'mediaTypes') && Object.prototype.hasOwnProperty.call(bid.mediaTypes, VIDEO)) {
+          if (Object.prototype.hasOwnProperty.call(bid.mediaTypes[VIDEO], 'context')) {
             valid = true;
           }
         } else {
@@ -194,7 +194,7 @@ function _buildVideo(bid) {
   };
 
   Object.keys(ORTB_VIDEO_PARAMS).forEach(paramName => {
-    if (videoParams.hasOwnProperty(paramName)) {
+    if (Object.prototype.hasOwnProperty.call(videoParams, paramName)) {
       if (ORTB_VIDEO_PARAMS[paramName](videoParams[paramName])) {
         videoObj[paramName] = videoParams[paramName];
       } else {

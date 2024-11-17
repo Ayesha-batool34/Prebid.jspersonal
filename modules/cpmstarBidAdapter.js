@@ -167,7 +167,7 @@ export const spec = {
         }
       };
 
-      if (rawBid.hasOwnProperty('dealId')) {
+      if (Object.prototype.hasOwnProperty.call(rawBid, 'dealId')) {
         bidResponse.dealId = rawBid.dealId;
       }
 

@@ -237,7 +237,7 @@ export function getUmtSource(pageUrl, referrer) {
     };
 
     for (let engine in engines) {
-      if (engines.hasOwnProperty(engine) && engines[engine].test(pageUrl)) {
+      if (Object.prototype.hasOwnProperty.call(engines, engine) && engines[engine].test(pageUrl)) {
         return engine;
       }
     }

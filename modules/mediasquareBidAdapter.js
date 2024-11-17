@@ -94,7 +94,7 @@ export const spec = {
       if (bidderRequest.schain) { payload.schain = bidderRequest.schain; }
       if (bidderRequest.userId) {
         payload.userId = bidderRequest.userId;
-      } else if (bidderRequest.hasOwnProperty('bids') && typeof bidderRequest.bids == 'object' && bidderRequest.bids.length > 0 && bidderRequest.bids[0].hasOwnProperty('userId')) {
+      } else if (Object.prototype.hasOwnProperty.call(bidderRequest, 'bids') && typeof bidderRequest.bids == 'object' && bidderRequest.bids.length > 0 && Object.prototype.hasOwnProperty.call(bidderRequest.bids[0], 'userId')) {
         payload.userId = bidderRequest.bids[0].userId;
       }
       if (bidderRequest.ortb2?.regs?.ext?.dsa) { payload.dsa = bidderRequest.ortb2.regs.ext.dsa }
@@ -119,7 +119,7 @@ export const spec = {
     const bidResponses = [];
     let bidResponse = null;
     let value = null;
-    if (serverBody.hasOwnProperty('responses')) {
+    if (Object.prototype.hasOwnProperty.call(serverBody, 'responses')) {
       Object.keys(serverBody['responses']).forEach(key => {
         value = serverBody['responses'][key];
         bidResponse = {
@@ -153,7 +153,7 @@ export const spec = {
           bidResponse['mediaType'] = 'video';
           bidResponse['renderer'] = createRenderer(value, OUTSTREAM_RENDERER_URL);
         }
-        if (value.hasOwnProperty('deal_id')) { bidResponse['dealId'] = value['deal_id']; }
+        if (Object.prototype.hasOwnProperty.call(value, 'deal_id')) { bidResponse['dealId'] = value['deal_id']; }
         bidResponses.push(bidResponse);
       });
     }
@@ -168,8 +168,8 @@ export const spec = {
    * @return {UserSync[]} The user syncs which should be dropped.
    */
   getUserSyncs: function(syncOptions, serverResponses, gdprConsent, uspConsent) {
-    if (typeof serverResponses === 'object' && serverResponses != null && serverResponses.length > 0 && serverResponses[0].hasOwnProperty('body') &&
-        serverResponses[0].body.hasOwnProperty('cookies') && typeof serverResponses[0].body.cookies === 'object') {
+    if (typeof serverResponses === 'object' && serverResponses != null && serverResponses.length > 0 && Object.prototype.hasOwnProperty.call(serverResponses[0], 'body') &&
+        Object.prototype.hasOwnProperty.call(serverResponses[0].body, 'cookies') && typeof serverResponses[0].body.cookies === 'object') {
       return serverResponses[0].body.cookies;
     } else {
       return [];
@@ -182,15 +182,15 @@ export const spec = {
    */
   onBidWon: function(bid) {
     // fires a pixel to confirm a winning bid
-    if (bid.hasOwnProperty('mediaType') && bid.mediaType == 'video') {
+    if (Object.prototype.hasOwnProperty.call(bid, 'mediaType') && bid.mediaType == 'video') {
       return;
     }
     let params = { pbjs: '$prebid.version$', referer: encodeURIComponent(getRefererInfo().page || getRefererInfo().topmostLocation) };
     let endpoint = document.location.search.match(/msq_test=true/) ? BIDDER_URL_TEST : BIDDER_URL_PROD;
     let paramsToSearchFor = ['bidder', 'code', 'match', 'hasConsent', 'context', 'increment', 'ova'];
-    if (bid.hasOwnProperty('mediasquare')) {
+    if (Object.prototype.hasOwnProperty.call(bid, 'mediasquare')) {
       paramsToSearchFor.forEach(param => {
-        if (bid['mediasquare'].hasOwnProperty(param)) {
+        if (Object.prototype.hasOwnProperty.call(bid['mediasquare'], param)) {
           params[param] = bid['mediasquare'][param];
           if (typeof params[param] == 'number') {
             params[param] = params[param].toString();
@@ -200,7 +200,7 @@ export const spec = {
     };
     paramsToSearchFor = ['cpm', 'size', 'mediaType', 'currency', 'creativeId', 'adUnitCode', 'timeToRespond', 'requestId', 'auctionId', 'originalCpm', 'originalCurrency'];
     paramsToSearchFor.forEach(param => {
-      if (bid.hasOwnProperty(param)) {
+      if (Object.prototype.hasOwnProperty.call(bid, param)) {
         params[param] = bid[param];
         if (typeof params[param] == 'number') {
           params[param] = params[param].toString();

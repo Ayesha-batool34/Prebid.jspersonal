@@ -206,16 +206,16 @@ describe('YieldmoAdapter', function () {
 
       it('should add additional information to data parameter of request', function () {
         const data = buildAndGetData([mockBannerBid()]);
-        expect(data.hasOwnProperty('page_url')).to.be.true;
-        expect(data.hasOwnProperty('bust')).to.be.true;
-        expect(data.hasOwnProperty('pr')).to.be.true;
-        expect(data.hasOwnProperty('scrd')).to.be.true;
+        expect(Object.prototype.hasOwnProperty.call(data, 'page_url')).to.be.true;
+        expect(Object.prototype.hasOwnProperty.call(data, 'bust')).to.be.true;
+        expect(Object.prototype.hasOwnProperty.call(data, 'pr')).to.be.true;
+        expect(Object.prototype.hasOwnProperty.call(data, 'scrd')).to.be.true;
         expect(data.dnt).to.be.false;
-        expect(data.hasOwnProperty('description')).to.be.true;
-        expect(data.hasOwnProperty('title')).to.be.true;
-        expect(data.hasOwnProperty('h')).to.be.true;
-        expect(data.hasOwnProperty('w')).to.be.true;
-        expect(data.hasOwnProperty('pubcid')).to.be.true;
+        expect(Object.prototype.hasOwnProperty.call(data, 'description')).to.be.true;
+        expect(Object.prototype.hasOwnProperty.call(data, 'title')).to.be.true;
+        expect(Object.prototype.hasOwnProperty.call(data, 'h')).to.be.true;
+        expect(Object.prototype.hasOwnProperty.call(data, 'w')).to.be.true;
+        expect(Object.prototype.hasOwnProperty.call(data, 'pubcid')).to.be.true;
         expect(data.userConsent).to.equal('{"gdprApplies":"","cmp":"","gpp":"","gpp_sid":[]}');
         expect(data.us_privacy).to.equal('');
       });

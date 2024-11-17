@@ -40,7 +40,7 @@ export const tapadIdSubmodule = {
           {
             success: (response) => {
               const responseJson = JSON.parse(response);
-              if (responseJson.hasOwnProperty('tapadId')) {
+              if (Object.prototype.hasOwnProperty.call(responseJson, 'tapadId')) {
                 complete(responseJson.tapadId);
               }
             },

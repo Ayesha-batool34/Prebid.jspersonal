@@ -167,7 +167,7 @@ describe('topics', () => {
 
         it('should not set name if null', () => {
           getTopicsData(null, topics).forEach((data) => {
-            expect(data.hasOwnProperty('name')).to.be.false;
+            expect(Object.prototype.hasOwnProperty.call(data, 'name')).to.be.false;
           });
         });
       });

@@ -169,9 +169,9 @@ function addVideo(videoParams, mediaTypesVideoParams, giBidRequest) {
     let paramValue;
 
     const mediaTypesVideoParam = VIDEO_PROPERTIES[videoParam];
-    if (videoParams.hasOwnProperty(videoParam)) {
+    if (Object.prototype.hasOwnProperty.call(videoParams, videoParam)) {
       paramValue = videoParams[videoParam];
-    } else if (mediaTypesVideoParam !== null && mediaTypesVideoParams.hasOwnProperty(mediaTypesVideoParam)) {
+    } else if (mediaTypesVideoParam !== null && Object.prototype.hasOwnProperty.call(mediaTypesVideoParams, mediaTypesVideoParam)) {
       if (mediaTypesVideoParam === 'skip') {
         paramValue = mediaTypesVideoParams[mediaTypesVideoParam] === 1 ? SKIPPABLE_ALLOW : SKIPPABLE_NOT_ALLOW;
       } else {
@@ -187,7 +187,7 @@ function addVideo(videoParams, mediaTypesVideoParams, giBidRequest) {
 
 function addOptional(params, request, props) {
   for (let i = 0; i < props.length; i++) {
-    if (params.hasOwnProperty(props[i])) {
+    if (Object.prototype.hasOwnProperty.call(params, props[i])) {
       request[props[i]] = params[props[i]];
     }
   }

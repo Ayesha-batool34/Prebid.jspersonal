@@ -292,7 +292,7 @@ var getOutstreamScript = function(bid) {
   var config = bid.params;
 
   // default placement if no placement is set
-  if (!config.hasOwnProperty('domId') && !config.hasOwnProperty('auto') && !config.hasOwnProperty('p') && !config.hasOwnProperty('article')) {
+  if (!Object.prototype.hasOwnProperty.call(config, 'domId') && !Object.prototype.hasOwnProperty.call(config, 'auto') && !Object.prototype.hasOwnProperty.call(config, 'p') && !Object.prototype.hasOwnProperty.call(config, 'article')) {
     if (config.format === 'intext-roll') {
       config.iframeMode = 'dfp';
     } else {
@@ -307,7 +307,7 @@ var getOutstreamScript = function(bid) {
   for (var key in config) {
     // dont' send format parameter
     // neither zone nor vastUrlParams value as Vast is already loaded
-    if (config.hasOwnProperty(key) && key !== 'format' && key !== 'zone' && key !== 'zoneId' && key !== 'vastUrlParams') {
+    if (Object.prototype.hasOwnProperty.call(config, key) && key !== 'format' && key !== 'zone' && key !== 'zoneId' && key !== 'vastUrlParams') {
       script += ',' + key + ':"' + config[key] + '"';
     }
   }
@@ -419,7 +419,7 @@ export const spec = {
       var vastParams = currentBidRequest.params.vastUrlParams;
       if (typeof vastParams === 'object') {
         for (var key in vastParams) {
-          if (vastParams.hasOwnProperty(key)) {
+          if (Object.prototype.hasOwnProperty.call(vastParams, key)) {
             requestParams[key] = vastParams[key];
           }
         }

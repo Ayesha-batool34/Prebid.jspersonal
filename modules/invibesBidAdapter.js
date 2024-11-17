@@ -209,7 +209,7 @@ function buildRequest(bidRequests, bidderRequest) {
 
   const parametersToPassForward = 'videoaddebug,advs,bvci,bvid,istop,trybvid,trybvci'.split(',');
   for (let key in currentQueryStringParams) {
-    if (currentQueryStringParams.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(currentQueryStringParams, key)) {
       let value = currentQueryStringParams[key];
       if (parametersToPassForward.indexOf(key) > -1 || /^vs|^invib/i.test(key)) {
         data[key] = value;
@@ -410,7 +410,7 @@ function addMeta(bidModelMeta) {
   var meta = {};
   if (bidModelMeta != null) {
     for (let i = 0; i < CONSTANTS.META_TAXONOMY.length; i++) {
-      if (bidModelMeta.hasOwnProperty(CONSTANTS.META_TAXONOMY[i])) {
+      if (Object.prototype.hasOwnProperty.call(bidModelMeta, CONSTANTS.META_TAXONOMY[i])) {
         meta[CONSTANTS.META_TAXONOMY[i]] = bidModelMeta[CONSTANTS.META_TAXONOMY[i]];
       }
     }
@@ -554,7 +554,7 @@ function getCappedCampaignsAsString() {
     let data = loadData();
     return Object.keys(data)
       .filter(function (k) {
-        return data.hasOwnProperty(k);
+        return Object.prototype.hasOwnProperty.call(data, k);
       })
       .sort()
       .map(function (k) {
@@ -668,7 +668,7 @@ function tryCopyValueToArray(value, target, length) {
         break;
       }
 
-      if (value.hasOwnProperty(prop)) {
+      if (Object.prototype.hasOwnProperty.call(value, prop)) {
         let parsedProp = parseInt(prop);
         if (isNaN(parsedProp)) {
           target[i] = !((value[prop] === false || value[prop] === 'false' || value[prop] == null));

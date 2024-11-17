@@ -95,7 +95,7 @@ export function ortbConverter({
         const impContext = Object.assign({bidderRequest, reqContext: ctx.req}, defaultContext, context);
         const result = buildImp(bidRequest, impContext);
         if (result != null) {
-          if (result.hasOwnProperty('id')) {
+          if (Object.prototype.hasOwnProperty.call(result, 'id')) {
             Object.assign(impContext, {bidRequest, imp: result});
             ctx.imp[result.id] = impContext;
             return result;
@@ -122,7 +122,7 @@ export function ortbConverter({
       const impsById = Object.fromEntries((request.imp || []).map(imp => [imp.id, imp]));
       const bidResponses = (response.seatbid || []).flatMap(seatbid =>
         (seatbid.bid || []).map((bid) => {
-          if (impsById.hasOwnProperty(bid.impid) && ctx.imp.hasOwnProperty(bid.impid)) {
+          if (Object.prototype.hasOwnProperty.call(impsById, bid.impid) && Object.prototype.hasOwnProperty.call(ctx.imp, bid.impid)) {
             return buildBidResponse(bid, augmentContext(ctx.imp[bid.impid], {imp: impsById[bid.impid], seatbid, ortbResponse: response}));
           }
           logError('ORTB response seatbid[].bid[].impid does not match any imp in request; ignoring bid', bid);

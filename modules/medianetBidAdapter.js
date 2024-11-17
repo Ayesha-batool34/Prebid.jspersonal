@@ -275,7 +275,7 @@ function getBidFloorByType(bidRequest) {
   let floorInfo = [];
   if (typeof bidRequest.getFloor === 'function') {
     [BANNER, VIDEO, NATIVE].forEach(mediaType => {
-      if (bidRequest.mediaTypes.hasOwnProperty(mediaType)) {
+      if (Object.prototype.hasOwnProperty.call(bidRequest.mediaTypes, mediaType)) {
         if (mediaType == BANNER) {
           bidRequest.mediaTypes.banner.sizes.forEach(
             size => {

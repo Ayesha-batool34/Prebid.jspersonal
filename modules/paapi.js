@@ -148,10 +148,10 @@ function onAuctionEnd({auctionId, bidsReceived, bidderRequests, adUnitCodes, adU
   const allReqs = bidderRequests?.flatMap(br => br.bids);
   const paapiConfigs = configsForAuction(auctionId);
   (adUnitCodes || []).forEach(au => {
-    if (!paapiConfigs.hasOwnProperty(au)) {
+    if (!Object.prototype.hasOwnProperty.call(paapiConfigs, au)) {
       paapiConfigs[au] = null;
     }
-    !latestAuctionForAdUnit.hasOwnProperty(au) && (latestAuctionForAdUnit[au] = null);
+    !Object.prototype.hasOwnProperty.call(latestAuctionForAdUnit, au) && (latestAuctionForAdUnit[au] = null);
   });
 
   const pendingConfigs = pendingConfigsForAuction(auctionId);
@@ -187,7 +187,7 @@ function onAuctionEnd({auctionId, bidsReceived, bidderRequests, adUnitCodes, adU
 
   function resolveSignals(signals, deferrals) {
     Object.entries(deferrals).forEach(([signal, {resolve, default: defaultValue}]) => {
-      let value = signals.hasOwnProperty(signal) ? signals[signal] : null;
+      let value = Object.prototype.hasOwnProperty.call(signals, signal) ? signals[signal] : null;
       if (value == null && defaultValue == null) {
         value = undefined;
       } else if (typeof defaultValue === 'object' && typeof value === 'object') {
@@ -202,7 +202,7 @@ function onAuctionEnd({auctionId, bidsReceived, bidderRequests, adUnitCodes, adU
   Object.entries(deferredConfigs).forEach(([adUnitCode, {top, components}]) => {
     resolveSignals(signals[adUnitCode], top);
     Object.entries(components).forEach(([configId, {deferrals}]) => {
-      const matchingConfigs = configsById.hasOwnProperty(configId) ? configsById[configId] : [];
+      const matchingConfigs = Object.prototype.hasOwnProperty.call(configsById, configId) ? configsById[configId] : [];
       if (matchingConfigs.length > 1) {
         logWarn(`Received multiple PAAPI configs for the same bidder and seller (${configId}), active PAAPI auctions will only see the first`);
       }
@@ -234,7 +234,7 @@ function onAuctionEnd({auctionId, bidsReceived, bidderRequests, adUnitCodes, adU
 }
 
 function append(target, key, value) {
-  !target.hasOwnProperty(key) && (target[key] = []);
+  !Object.prototype.hasOwnProperty.call(target, key) && (target[key] = []);
   target[key].push(value);
 }
 
@@ -333,7 +333,7 @@ export function mergeBuyers(igbs) {
 export function partitionBuyers(igbs) {
   return igbs.reduce((partitions, igb) => {
     if (checkOrigin(igb)) {
-      let partition = partitions.find(part => !part.hasOwnProperty(igb.origin) || deepEqual(part[igb.origin], igb));
+      let partition = partitions.find(part => !Object.prototype.hasOwnProperty.call(part, igb.origin) || deepEqual(part[igb.origin], igb));
       if (!partition) {
         partition = {};
         partitions.push(partition);
@@ -348,7 +348,7 @@ export function partitionBuyersByBidder(igbRequests) {
   const requests = {};
   const igbs = {};
   igbRequests.forEach(([request, igb]) => {
-    !requests.hasOwnProperty(request.bidder) && (requests[request.bidder] = request);
+    !Object.prototype.hasOwnProperty.call(requests, request.bidder) && (requests[request.bidder] = request);
     append(igbs, request.bidder, igb);
   })
   return Object.entries(igbs).map(([bidder, igbs]) => [requests[bidder], igbs])
@@ -368,7 +368,7 @@ function expandFilters({auctionId, adUnitCode} = {}) {
   let adUnitCodes = [];
   if (adUnitCode == null) {
     adUnitCodes = Object.keys(latestAuctionForAdUnit);
-  } else if (latestAuctionForAdUnit.hasOwnProperty(adUnitCode)) {
+  } else if (Object.prototype.hasOwnProperty.call(latestAuctionForAdUnit, adUnitCode)) {
     adUnitCodes = [adUnitCode];
   }
   return Object.fromEntries(
@@ -389,7 +389,7 @@ export function getPAAPIConfig(filters = {}, includeBlanks = false) {
   const output = {};
   Object.entries(expandFilters(filters)).forEach(([au, auctionId]) => {
     const auctionConfigs = configsForAuction(auctionId);
-    if (auctionConfigs?.hasOwnProperty(au)) {
+    if (Object.prototype.hasOwnProperty.call(auctionConfigs, au)) {
       // ad unit was involved in a PAAPI auction
       const candidate = auctionConfigs[au];
       if (candidate && !USED.has(candidate)) {
@@ -513,7 +513,7 @@ const validatePartialConfig = (() => {
   ];
 
   return function (config) {
-    const invalid = REQUIRED_SYNC_SIGNALS.find(({props, validate}) => props.every(prop => !config.hasOwnProperty(prop) || !config[prop] || !validate(config[prop])));
+    const invalid = REQUIRED_SYNC_SIGNALS.find(({props, validate}) => props.every(prop => !Object.prototype.hasOwnProperty.call(config, prop) || !config[prop] || !validate(config[prop])));
     if (invalid) {
       logError(`Partial PAAPI config has missing or invalid property "${invalid.props[0]}"`, config)
       return false;
@@ -547,7 +547,7 @@ export function parallelPaapiProcessing(next, spec, bids, bidderRequest, ...args
     let promises = {};
     const deferrals = Object.fromEntries(ASYNC_SIGNALS.map(signal => {
       const def = defer({promiseFactory: (resolver) => new Promise(resolver)});
-      def.default = defaults.hasOwnProperty(signal) ? defaults[signal] : null;
+      def.default = Object.prototype.hasOwnProperty.call(defaults, signal) ? defaults[signal] : null;
       promises[signal] = def.promise;
       return [signal, def]
     }))
@@ -558,7 +558,7 @@ export function parallelPaapiProcessing(next, spec, bids, bidderRequest, ...args
   const auctionConfigs = configsForAuction(auctionId);
   bids.map(bid => bid.adUnitCode).forEach(adUnitCode => {
     latestAuctionForAdUnit[adUnitCode] = auctionId;
-    if (!auctionConfigs.hasOwnProperty(adUnitCode)) {
+    if (!Object.prototype.hasOwnProperty.call(auctionConfigs, adUnitCode)) {
       auctionConfigs[adUnitCode] = null;
     }
   });
@@ -576,7 +576,7 @@ export function parallelPaapiProcessing(next, spec, bids, bidderRequest, ...args
     });
     const requestsById = Object.fromEntries(bids.map(bid => [bid.bidId, bid]));
     (partialConfigs ?? []).forEach(({bidId, config, igb}) => {
-      const bidRequest = requestsById.hasOwnProperty(bidId) && requestsById[bidId];
+      const bidRequest = Object.prototype.hasOwnProperty.call(requestsById, bidId) && requestsById[bidId];
       if (!bidRequest) {
         logError(`Received partial PAAPI config for unknown bidId`, {bidId, config});
       } else {
@@ -585,7 +585,7 @@ export function parallelPaapiProcessing(next, spec, bids, bidderRequest, ...args
         const deferredConfigs = deferredConfigsForAuction(auctionId);
 
         const getDeferredConfig = () => {
-          if (!deferredConfigs.hasOwnProperty(adUnitCode)) {
+          if (!Object.prototype.hasOwnProperty.call(deferredConfigs, adUnitCode)) {
             const [deferrals, promises] = makeDeferrals();
             auctionConfigs[adUnitCode] = {
               ...getStaticSignals(auctionManager.index.getAdUnit(bidRequest)),
@@ -604,7 +604,7 @@ export function parallelPaapiProcessing(next, spec, bids, bidderRequest, ...args
         if (config && validatePartialConfig(config)) {
           const configId = getConfigId(bidRequest.bidder, config.seller);
           const deferredConfig = getDeferredConfig();
-          if (deferredConfig.components.hasOwnProperty(configId)) {
+          if (Object.prototype.hasOwnProperty.call(deferredConfig.components, configId)) {
             logWarn(`Received multiple PAAPI configs for the same bidder and seller; config will be ignored`, {
               config,
               bidder: bidRequest.bidder
@@ -624,12 +624,12 @@ export function parallelPaapiProcessing(next, spec, bids, bidderRequest, ...args
           const configId = getComponentSellerConfigId(spec.code);
           const deferredConfig = getDeferredConfig();
           const partialConfig = buyersToAuctionConfigs([[bidRequest, igb]])[0][1];
-          if (deferredConfig.components.hasOwnProperty(configId)) {
+          if (Object.prototype.hasOwnProperty.call(deferredConfig.components, configId)) {
             const {auctionConfig, deferrals} = deferredConfig.components[configId];
             if (!auctionConfig.interestGroupBuyers.includes(igb.origin)) {
               const immediate = {};
               Object.entries(partialConfig).forEach(([key, value]) => {
-                if (deferrals.hasOwnProperty(key)) {
+                if (Object.prototype.hasOwnProperty.call(deferrals, key)) {
                   mergeDeep(deferrals[key], {default: value});
                 } else {
                   immediate[key] = value;

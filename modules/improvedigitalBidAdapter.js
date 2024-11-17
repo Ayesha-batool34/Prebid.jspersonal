@@ -193,7 +193,7 @@ export const CONVERTER = ortbConverter({
     return request;
   },
   bidResponse(buildBidResponse, bid, context) {
-    if (!bid.adm || !bid.price || bid.hasOwnProperty('errorCode')) {
+    if (!bid.adm || !bid.price || Object.prototype.hasOwnProperty.call(bid, 'errorCode')) {
       return;
     }
     const {bidRequest} = context;

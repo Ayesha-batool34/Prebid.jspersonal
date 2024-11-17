@@ -11,7 +11,7 @@ export const getCreativeRenderer = (function() {
   const renderers = {};
   return function (bidResponse) {
     const src = getCreativeRendererSource(bidResponse);
-    if (!renderers.hasOwnProperty(src)) {
+    if (!Object.prototype.hasOwnProperty.call(renderers, src)) {
       renderers[src] = new GreedyPromise((resolve) => {
         const iframe = createInvisibleIframe();
         iframe.srcdoc = `<script>${src}</script>`;

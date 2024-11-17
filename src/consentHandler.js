@@ -147,7 +147,7 @@ export function gvlidRegistry() {
     register(moduleType, moduleName, gvlid) {
       if (gvlid) {
         (registry[moduleName] = registry[moduleName] || {})[moduleType] = gvlid;
-        if (flat.hasOwnProperty(moduleName)) {
+        if (Object.prototype.hasOwnProperty.call(flat, moduleName)) {
           if (flat[moduleName] !== gvlid) flat[moduleName] = none;
         } else {
           flat[moduleName] = gvlid;
@@ -170,7 +170,7 @@ export function gvlidRegistry() {
      */
     get(moduleName) {
       const result = {modules: registry[moduleName] || {}};
-      if (flat.hasOwnProperty(moduleName) && flat[moduleName] !== none) {
+      if (Object.prototype.hasOwnProperty.call(flat, moduleName) && flat[moduleName] !== none) {
         result.gvlid = flat[moduleName];
       }
       return result;

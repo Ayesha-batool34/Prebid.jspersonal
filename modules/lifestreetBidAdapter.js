@@ -126,7 +126,7 @@ export const spec = {
       }
     };
 
-    if (response.hasOwnProperty('dealId')) {
+    if (Object.prototype.hasOwnProperty.call(response, 'dealId')) {
       bidResponse.dealId = response.dealId;
     }
     if (isVideo) {

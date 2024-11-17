@@ -28,7 +28,7 @@ describe('uaDataToSUA', () => {
       }
       delete example[uaKey];
       const sua = uaDataToSUA(SUA_SOURCE_UNKNOWN, example);
-      expect(sua.hasOwnProperty(suaKey)).to.be.false;
+      expect(Object.prototype.hasOwnProperty.call(sua, suaKey)).to.be.false;
     })
   });
 

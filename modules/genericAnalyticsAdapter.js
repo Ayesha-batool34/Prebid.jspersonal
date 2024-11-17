@@ -31,18 +31,18 @@ export function GenericAnalytics() {
       logError('options must specify either `url` or `handler`')
       return false;
     }
-    if (options.hasOwnProperty('method') && !['GET', 'POST'].includes(options.method)) {
+    if (Object.prototype.hasOwnProperty.call(options, 'method') && !['GET', 'POST'].includes(options.method)) {
       logError('options.method must be GET or POST');
       return false;
     }
     for (const [field, type] of Object.entries(TYPES)) {
       // eslint-disable-next-line valid-typeof
-      if (options.hasOwnProperty(field) && typeof options[field] !== type) {
+      if (Object.prototype.hasOwnProperty.call(options, field) && typeof options[field] !== type) {
         logError(`options.${field} must be a ${type}`);
         return false;
       }
     }
-    if (options.hasOwnProperty('events')) {
+    if (Object.prototype.hasOwnProperty.call(options, 'events')) {
       if (!isPlainObject(options.events)) {
         logError('options.events must be an object');
         return false;
@@ -90,7 +90,7 @@ export function GenericAnalytics() {
       return (data) => data;
     }
     return function ({eventType, args}) {
-      if (eventHandlers.hasOwnProperty(eventType)) {
+      if (Object.prototype.hasOwnProperty.call(eventHandlers, eventType)) {
         try {
           return eventHandlers[eventType](args);
         } catch (e) {

@@ -14,7 +14,7 @@ export function Obj(primitiveFields, spec = {}) {
     Object.entries(value).forEach(([k, v]) => {
       if (v == null) return;
       const kpath = path == null ? k : `${path}.${k}`;
-      if (spec.hasOwnProperty(k)) {
+      if (Object.prototype.hasOwnProperty.call(spec, k)) {
         spec[k](kpath, value, k, v, onError);
         return;
       }

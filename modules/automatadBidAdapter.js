@@ -18,7 +18,7 @@ export const spec = {
 
   isBidRequestValid: function (bid) {
     // will receive request bid. check if have necessary params for bidding
-    return (bid && bid.hasOwnProperty('params') && bid.params.hasOwnProperty('siteId') && bid.params.siteId != null && bid.hasOwnProperty('mediaTypes') && bid.mediaTypes.hasOwnProperty('banner') && typeof bid.mediaTypes.banner == 'object')
+    return (bid && Object.prototype.hasOwnProperty.call(bid, 'params') && Object.prototype.hasOwnProperty.call(bid.params, 'siteId') && bid.params.siteId != null && Object.prototype.hasOwnProperty.call(bid, 'mediaTypes') && Object.prototype.hasOwnProperty.call(bid.mediaTypes, 'banner') && typeof bid.mediaTypes.banner == 'object')
   },
 
   buildRequests: function (validBidRequests, bidderRequest) {
@@ -29,7 +29,7 @@ export const spec = {
     const siteId = validBidRequests[0].params.siteId
 
     const impressions = validBidRequests.map(bidRequest => {
-      if (bidRequest.params.hasOwnProperty('placementId')) {
+      if (Object.prototype.hasOwnProperty.call(bidRequest.params, 'placementId')) {
         return {
           id: bidRequest.bidId,
           adUnitCode: bidRequest.adUnitCode,
@@ -118,8 +118,8 @@ export const spec = {
   },
   onBidWon: function(bid) {
     if (!bid.nurl) { return }
-    const winCpm = (bid.hasOwnProperty('originalCpm')) ? bid.originalCpm : bid.cpm
-    const winCurr = (bid.hasOwnProperty('originalCurrency') && bid.hasOwnProperty('originalCpm')) ? bid.originalCurrency : bid.currency
+    const winCpm = (Object.prototype.hasOwnProperty.call(bid, 'originalCpm')) ? bid.originalCpm : bid.cpm
+    const winCurr = (Object.prototype.hasOwnProperty.call(bid, 'originalCurrency') && Object.prototype.hasOwnProperty.call(bid, 'originalCpm')) ? bid.originalCurrency : bid.currency
     const winUrl = bid.nurl.replace(
       /\$\{AUCTION_PRICE\}/,
       winCpm

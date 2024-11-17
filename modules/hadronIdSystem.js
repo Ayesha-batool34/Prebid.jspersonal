@@ -69,7 +69,7 @@ export const hadronIdSubmodule = {
    */
   decode(value) {
     return {
-      hadronId: isStr(value) ? value : value.hasOwnProperty('id') ? value.id[MODULE_NAME] : value[MODULE_NAME]
+      hadronId: isStr(value) ? value : Object.prototype.hasOwnProperty.call(value, 'id') ? value.id[MODULE_NAME] : value[MODULE_NAME]
     }
   },
   /**
@@ -104,7 +104,7 @@ export const hadronIdSubmodule = {
               callback();
             }
             logInfo(LOG_PREFIX, `Response from backend is ${response}`, responseObj);
-            if (isPlainObject(responseObj) && responseObj.hasOwnProperty(MODULE_NAME)) {
+            if (isPlainObject(responseObj) && Object.prototype.hasOwnProperty.call(responseObj, MODULE_NAME)) {
               hadronId = responseObj[MODULE_NAME];
             }
             responseObj = hadronId; // {id: {hadronId: hadronId}};

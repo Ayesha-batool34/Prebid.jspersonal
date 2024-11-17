@@ -32,7 +32,7 @@ export let getMatchingWinningBidForGPTSlot = (globalModuleConfig, slot) => {
 };
 
 export let fireViewabilityPixels = (globalModuleConfig, bid) => {
-  if (globalModuleConfig[CONFIG_FIRE_PIXELS] === true && bid.hasOwnProperty(BID_VURL_ARRAY)) {
+  if (globalModuleConfig[CONFIG_FIRE_PIXELS] === true && Object.prototype.hasOwnProperty.call(bid, BID_VURL_ARRAY)) {
     let queryParams = gdprParams();
 
     const uspConsent = uspDataHandler.getConsentData();

@@ -113,7 +113,7 @@ export function getBidIdParameter(key, paramsObj) {
 export function parseQueryStringParameters(queryObj) {
   let result = '';
   for (var k in queryObj) {
-    if (queryObj.hasOwnProperty(k)) { result += k + '=' + encodeURIComponent(queryObj[k]) + '&'; }
+    if (Object.prototype.hasOwnProperty.call(queryObj, k)) { result += k + '=' + encodeURIComponent(queryObj[k]) + '&'; }
   }
   result = result.replace(/&$/, '');
   return result;
@@ -1008,7 +1008,7 @@ export function deepEqual(obj1, obj2, {checkTypes = false} = {}) {
     const props1 = Object.keys(obj1);
     if (props1.length !== Object.keys(obj2).length) return false;
     for (let prop of props1) {
-      if (obj2.hasOwnProperty(prop)) {
+      if (Object.prototype.hasOwnProperty.call(obj2, prop)) {
         if (!deepEqual(obj1[prop], obj2[prop], {checkTypes})) {
           return false;
         }
@@ -1222,7 +1222,7 @@ export function hasNonSerializableProperty(obj, checkedObjects = new Set()) {
       value instanceof Map ||
       value instanceof Set ||
       value instanceof Date ||
-      (value !== null && type === 'object' && value.hasOwnProperty('toJSON'))
+      (value !== null && type === 'object' && Object.prototype.hasOwnProperty.call(value, 'toJSON'))
     ) {
       return true;
     }

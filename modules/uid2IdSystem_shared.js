@@ -789,7 +789,7 @@ export function extractIdentityFromParams(params) {
   const keysToCheck = ['emailHash', 'phoneHash', 'email', 'phone'];
 
   for (let key of keysToCheck) {
-    if (params.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(params, key)) {
       return { [key]: params[key] };
     }
   }
