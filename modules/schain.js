@@ -64,7 +64,7 @@ export function isSchainObjectValid(schainObject, returnOnError) {
   }
 
   // ext: Object [optional]
-  if (schainObject.hasOwnProperty('ext')) {
+  if (Object.prototype.hasOwnProperty.call(schainObject, 'ext')) {
     if (!isPlainObject(schainObject.ext)) {
       appendFailMsg(`schain.config.ext` + shouldBeAnObject);
     }
@@ -93,28 +93,28 @@ export function isSchainObjectValid(schainObject, returnOnError) {
       }
 
       // rid: String [Optional]
-      if (node.hasOwnProperty('rid')) {
+      if (Object.prototype.hasOwnProperty.call(node, 'rid')) {
         if (!isStr(node.rid)) {
           appendFailMsg(`schain.config.nodes[${index}].rid` + shouldBeAString);
         }
       }
 
       // name: String [Optional]
-      if (node.hasOwnProperty('name')) {
+      if (Object.prototype.hasOwnProperty.call(node, 'name')) {
         if (!isStr(node.name)) {
           appendFailMsg(`schain.config.nodes[${index}].name` + shouldBeAString);
         }
       }
 
       // domain: String [Optional]
-      if (node.hasOwnProperty('domain')) {
+      if (Object.prototype.hasOwnProperty.call(node, 'domain')) {
         if (!isStr(node.domain)) {
           appendFailMsg(`schain.config.nodes[${index}].domain` + shouldBeAString);
         }
       }
 
       // ext: Object [Optional]
-      if (node.hasOwnProperty('ext')) {
+      if (Object.prototype.hasOwnProperty.call(node, 'ext')) {
         if (!isPlainObject(node.ext)) {
           appendFailMsg(`schain.config.nodes[${index}].ext` + shouldBeAnObject);
         }

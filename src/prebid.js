@@ -170,7 +170,7 @@ function validateNativeMediaType(adUnit) {
   }
   function checkDeprecated(onDeprecated) {
     for (const key of ['sendTargetingKeys', 'types']) {
-      if (native.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(native, key)) {
         const res = onDeprecated(key);
         if (res) return res;
       }
@@ -277,12 +277,12 @@ export const checkAdUnitSetup = hook('sync', function (adUnits) {
 
     if (mediaTypes.banner) {
       validatedBanner = validateBannerMediaType(adUnit);
-      if (mediaTypes.banner.hasOwnProperty('pos')) validatedBanner = validateAdUnitPos(validatedBanner, 'banner');
+      if (Object.prototype.hasOwnProperty.call(mediaTypes.banner, 'pos')) validatedBanner = validateAdUnitPos(validatedBanner, 'banner');
     }
 
     if (FEATURES.VIDEO && mediaTypes.video) {
       validatedVideo = validatedBanner ? validateVideoMediaType(validatedBanner) : validateVideoMediaType(adUnit);
-      if (mediaTypes.video.hasOwnProperty('pos')) validatedVideo = validateAdUnitPos(validatedVideo, 'video');
+      if (Object.prototype.hasOwnProperty.call(mediaTypes.video, 'pos')) validatedVideo = validateAdUnitPos(validatedVideo, 'video');
     }
 
     if (FEATURES.NATIVE && mediaTypes.native) {
@@ -602,13 +602,13 @@ export const startAuction = hook('async', function ({ bidsBackHandler, timeout: 
     adUnit.adUnitId = generateUUID();
     const tid = adUnit.ortb2Imp?.ext?.tid;
     if (tid) {
-      if (tids.hasOwnProperty(adUnit.code)) {
+      if (Object.prototype.hasOwnProperty.call(tids, adUnit.code)) {
         logWarn(`Multiple distinct ortb2Imp.ext.tid were provided for twin ad units '${adUnit.code}'`)
       } else {
         tids[adUnit.code] = tid;
       }
     }
-    if (ttlBuffer != null && !adUnit.hasOwnProperty('ttlBuffer')) {
+    if (ttlBuffer != null && !Object.prototype.hasOwnProperty.call(adUnit, 'ttlBuffer')) {
       adUnit.ttlBuffer = ttlBuffer;
     }
     bidders.forEach(bidder => {
@@ -632,7 +632,7 @@ export const startAuction = hook('async', function ({ bidsBackHandler, timeout: 
   } else {
     adUnits.forEach(au => {
       const tid = au.ortb2Imp?.ext?.tid || tids[au.code] || generateUUID();
-      if (!tids.hasOwnProperty(au.code)) {
+      if (!Object.prototype.hasOwnProperty.call(tids, au.code)) {
         tids[au.code] = tid;
       }
       au.transactionId = tid;

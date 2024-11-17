@@ -320,7 +320,7 @@ function buildVideo(request) {
   let video = {};
   const videoParams = deepAccess(request, 'mediaTypes.video', {});
   for (const key in VIDEO_CUSTOM_PARAMS) {
-    if (videoParams.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(videoParams, key)) {
       video[key] = checkParamDataType(key, videoParams[key], VIDEO_CUSTOM_PARAMS[key]);
     }
   }

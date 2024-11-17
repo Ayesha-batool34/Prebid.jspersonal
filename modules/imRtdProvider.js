@@ -110,7 +110,7 @@ export function setRealTimeData(bidConfig, moduleConfig, data) {
     const ortb2 = bidConfig.ortb2Fragments?.global || {};
     deepSetValue(ortb2, 'user.ext.data.im_segments', segments);
 
-    if (moduleConfig.params.setGptKeyValues || !moduleConfig.params.hasOwnProperty('setGptKeyValues')) {
+    if (moduleConfig.params.setGptKeyValues || !Object.prototype.hasOwnProperty.call(moduleConfig.params, 'setGptKeyValues')) {
       window.googletag = window.googletag || {cmd: []};
       window.googletag.cmd = window.googletag.cmd || [];
       window.googletag.cmd.push(() => {

@@ -13,7 +13,7 @@ import {deepAccess, isArray, isEmptyStr, isFn, logError} from '../../src/utils.j
  * @param payload
  */
 export function fillUsersIds(bidRequest, payload) {
-  if (bidRequest.hasOwnProperty('userId')) {
+  if (Object.prototype.hasOwnProperty.call(bidRequest, 'userId')) {
     let didMapping = {
       did_netid: 'userId.netId',
       did_id5: 'userId.id5id.uid',
@@ -85,7 +85,7 @@ export function objectToQueryString(obj, prefix) {
   let str = [];
   let p;
   for (p in obj) {
-    if (obj.hasOwnProperty(p)) {
+    if (Object.prototype.hasOwnProperty.call(obj, p)) {
       let k = prefix ? prefix + '[' + p + ']' : p;
       let v = obj[p];
       str.push((v !== null && typeof v === 'object')

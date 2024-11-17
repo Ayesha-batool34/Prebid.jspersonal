@@ -112,9 +112,9 @@ function _parseAdSlot(bid) {
   bid.params.width = 0;
   bid.params.height = 0;
   // check if size is mentioned in sizes array. in that case do not check for @ in adslot
-  if (bid.hasOwnProperty('mediaTypes') &&
-    bid.mediaTypes.hasOwnProperty(BANNER) &&
-    bid.mediaTypes.banner.hasOwnProperty('sizes')) {
+  if (Object.prototype.hasOwnProperty.call(bid, 'mediaTypes') &&
+    Object.prototype.hasOwnProperty.call(bid.mediaTypes, BANNER) &&
+    Object.prototype.hasOwnProperty.call(bid.mediaTypes.banner, 'sizes')) {
     var i = 0;
     var sizeArray = [];
     for (; i < bid.mediaTypes.banner.sizes.length; i++) {
@@ -214,7 +214,7 @@ function _checkParamDataType(key, value, datatype) {
 
 function _parseNativeResponse(bid, newBid) {
   newBid.native = {};
-  if (bid.hasOwnProperty('adm')) {
+  if (Object.prototype.hasOwnProperty.call(bid, 'adm')) {
     var adm = '';
     try {
       adm = JSON.parse(bid.adm.replace(/\\/g, ''));
@@ -321,7 +321,7 @@ function _createVideoRequest(bid) {
   if (videoData !== UNDEFINED) {
     videoObj = {};
     for (var key in VIDEO_CUSTOM_PARAMS) {
-      if (videoData.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(videoData, key)) {
         videoObj[key] = _checkParamDataType(key, videoData[key], VIDEO_CUSTOM_PARAMS[key]);
       }
     }
@@ -333,7 +333,7 @@ function _createVideoRequest(bid) {
       videoObj.w = parseInt(bid.mediaTypes.video.playerSize[0], 10);
       videoObj.h = parseInt(bid.mediaTypes.video.playerSize[1], 10);
     }
-    if (bid.params.video.hasOwnProperty('skippable')) {
+    if (Object.prototype.hasOwnProperty.call(bid.params.video, 'skippable')) {
       videoObj.ext = {
         'video_skippable': bid.params.video.skippable ? 1 : 0
       };
@@ -367,7 +367,7 @@ function _createImpressionObject(bid, conf) {
   var impObj = {};
   var bannerObj;
   var videoObj;
-  var sizes = bid.hasOwnProperty('sizes') ? bid.sizes : [];
+  var sizes = Object.prototype.hasOwnProperty.call(bid, 'sizes') ? bid.sizes : [];
   var mediaTypes = '';
   var format = [];
 
@@ -380,7 +380,7 @@ function _createImpressionObject(bid, conf) {
     bidfloorcur: ADTRUE_CURRENCY
   };
 
-  if (bid.hasOwnProperty('mediaTypes')) {
+  if (Object.prototype.hasOwnProperty.call(bid, 'mediaTypes')) {
     for (mediaTypes in bid.mediaTypes) {
       switch (mediaTypes) {
         case BANNER:
@@ -419,9 +419,9 @@ function _createImpressionObject(bid, conf) {
     impObj.banner = bannerObj;
   }
 
-  return impObj.hasOwnProperty(BANNER) ||
-  impObj.hasOwnProperty(NATIVE) ||
-  impObj.hasOwnProperty(VIDEO) ? impObj : UNDEFINED;
+  return Object.prototype.hasOwnProperty.call(impObj, BANNER) ||
+  Object.prototype.hasOwnProperty.call(impObj, NATIVE) ||
+  Object.prototype.hasOwnProperty.call(impObj, VIDEO) ? impObj : UNDEFINED;
 }
 
 export const spec = {
@@ -473,7 +473,7 @@ export const spec = {
       conf.transactionId = bid.ortb2Imp?.ext?.tid;
       if (bidCurrency === '') {
         bidCurrency = bid.params.currency || UNDEFINED;
-      } else if (bid.params.hasOwnProperty('currency') && bidCurrency !== bid.params.currency) {
+      } else if (Object.prototype.hasOwnProperty.call(bid.params, 'currency') && bidCurrency !== bid.params.currency) {
         logWarn(LOG_WARN_PREFIX + 'Currency specifier ignored. Only one currency permitted.');
       }
       bid.params.currency = bidCurrency;

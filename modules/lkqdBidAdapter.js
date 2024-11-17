@@ -166,7 +166,7 @@ export const spec = {
         };
 
         for (let k = 1; k <= 40; k++) {
-          if (bid.params.hasOwnProperty(`c${k}`) && bid.params[`c${k}`]) {
+          if (Object.prototype.hasOwnProperty.call(bid.params, `c${k}`) && bid.params[`c${k}`]) {
             impObj.video.ext.lkqdcustomparameters[`c${k}`] = bid.params[`c${k}`];
           }
         }

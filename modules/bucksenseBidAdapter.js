@@ -47,7 +47,7 @@ export const spec = {
       var bid = validBidRequests[i];
       var params = {};
       for (var key in bid.params) {
-        if (bid.params.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(bid.params, key)) {
           params[key] = encodeURI(bid.params[key]);
         }
       }
@@ -103,7 +103,7 @@ export const spec = {
         sRequestID = request.data.bid_id || '';
       }
 
-      if (request && request.data.params.hasOwnProperty('testcpm')) {
+      if (request && Object.prototype.hasOwnProperty.call(request.data.params, 'testcpm')) {
         logInfo(WHO + ' interpretResponse() - use Test CPM ');
         nCPM = request.data.params.testcpm;
       }

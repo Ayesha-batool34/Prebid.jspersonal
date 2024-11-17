@@ -118,7 +118,7 @@ export const spec = {
     const userKey = getUserKey(validBidRequests[0]?.params);
     const placements = validBidRequests.map((bid, index) => {
       const options = bid.params.options || {};
-      if (!options.hasOwnProperty('startCompact')) {
+      if (!Object.prototype.hasOwnProperty.call(options, 'startCompact')) {
         options.startCompact = true;
       }
       return {

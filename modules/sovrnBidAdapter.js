@@ -356,7 +356,7 @@ function _buildVideoRequestObj(bid) {
   };
 
   Object.keys(ORTB_VIDEO_PARAMS).forEach(paramName => {
-    if (videoParams.hasOwnProperty(paramName)) {
+    if (Object.prototype.hasOwnProperty.call(videoParams, paramName)) {
       if (ORTB_VIDEO_PARAMS[paramName](videoParams[paramName])) {
         videoObj[paramName] = videoParams[paramName]
       } else {

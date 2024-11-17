@@ -209,9 +209,9 @@ function _parseAdSlot(bid) {
     }
     bid.params.width = parseInt(splits[0], 10);
     bid.params.height = parseInt(splits[1], 10);
-  } else if (bid.hasOwnProperty('mediaTypes') &&
-         bid.mediaTypes.hasOwnProperty(BANNER) &&
-          bid.mediaTypes.banner.hasOwnProperty('sizes')) {
+  } else if (Object.prototype.hasOwnProperty.call(bid, 'mediaTypes') &&
+         Object.prototype.hasOwnProperty.call(bid.mediaTypes, BANNER) &&
+          Object.prototype.hasOwnProperty.call(bid.mediaTypes.banner, 'sizes')) {
     var i = 0;
     var sizeArray = [];
     for (;i < bid.mediaTypes.banner.sizes.length; i++) {
@@ -245,7 +245,7 @@ function _handleCustomParams(params, conf) {
 
   var key, value, entry;
   for (key in CUSTOM_PARAMS) {
-    if (CUSTOM_PARAMS.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(CUSTOM_PARAMS, key)) {
       value = params[key];
       if (value) {
         entry = CUSTOM_PARAMS[key];
@@ -377,7 +377,7 @@ export function toOrtbNativeRequest(legacyNativeAssets) {
   for (let key in legacyNativeAssets) {
     // skip conversion for non-asset keys
     if (NATIVE_KEYS_THAT_ARE_NOT_ASSETS.includes(key)) continue;
-    if (!NATIVE_KEYS.hasOwnProperty(key) && !PREBID_NATIVE_DATA_KEY_VALUES.includes(key)) {
+    if (!Object.prototype.hasOwnProperty.call(NATIVE_KEYS, key) && !PREBID_NATIVE_DATA_KEY_VALUES.includes(key)) {
       logWarn(`${LOG_WARN_PREFIX}: Unrecognized native asset code: ${key}. Asset will be ignored.`);
       continue;
     }
@@ -559,7 +559,7 @@ function _createBannerRequest(bid) {
     // Adding Banner custom params
     const bannerCustomParams = {...deepAccess(bid, 'ortb2Imp.banner')};
     for (let key in BANNER_CUSTOM_PARAMS) {
-      if (bannerCustomParams.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(bannerCustomParams, key)) {
         bannerObj[key] = _checkParamDataType(key, bannerCustomParams[key], BANNER_CUSTOM_PARAMS[key]);
       }
     }
@@ -585,7 +585,7 @@ function _createVideoRequest(bid) {
     videoObj = {};
     checkVideoPlacement(videoData, bid.adUnitCode);
     for (var key in VIDEO_CUSTOM_PARAMS) {
-      if (videoData.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(videoData, key)) {
         videoObj[key] = _checkParamDataType(key, videoData[key], VIDEO_CUSTOM_PARAMS[key]);
       }
     }
@@ -651,7 +651,7 @@ function _addJWPlayerSegmentData(imp, bid) {
   var jwPlayerData = '';
   const jwMark = 'jw-';
 
-  if (jwSegData === undefined || jwSegData === '' || !jwSegData.hasOwnProperty('segments')) return;
+  if (jwSegData === undefined || jwSegData === '' || !Object.prototype.hasOwnProperty.call(jwSegData, 'segments')) return;
 
   var maxLength = jwSegData.segments.length;
 
@@ -672,7 +672,7 @@ function _createImpressionObject(bid, bidderRequest) {
   var bannerObj;
   var videoObj;
   var nativeObj = {};
-  var sizes = bid.hasOwnProperty('sizes') ? bid.sizes : [];
+  var sizes = Object.prototype.hasOwnProperty.call(bid, 'sizes') ? bid.sizes : [];
   var mediaTypes = '';
   var format = [];
   var isFledgeEnabled = bidderRequest?.paapi?.enabled;
@@ -694,7 +694,7 @@ function _createImpressionObject(bid, bidderRequest) {
   _addPMPDealsInImpression(impObj, bid);
   _addDealCustomTargetings(impObj, bid);
   _addJWPlayerSegmentData(impObj, bid);
-  if (bid.hasOwnProperty('mediaTypes')) {
+  if (Object.prototype.hasOwnProperty.call(bid, 'mediaTypes')) {
     for (mediaTypes in bid.mediaTypes) {
       switch (mediaTypes) {
         case BANNER:
@@ -751,9 +751,9 @@ function _createImpressionObject(bid, bidderRequest) {
 
   _addFledgeflag(impObj, bid, isFledgeEnabled)
 
-  return impObj.hasOwnProperty(BANNER) ||
-          impObj.hasOwnProperty(NATIVE) ||
-          (FEATURES.VIDEO && impObj.hasOwnProperty(VIDEO)) ? impObj : UNDEFINED;
+  return Object.prototype.hasOwnProperty.call(impObj, BANNER) ||
+          Object.prototype.hasOwnProperty.call(impObj, NATIVE) ||
+          (FEATURES.VIDEO && Object.prototype.hasOwnProperty.call(impObj, VIDEO)) ? impObj : UNDEFINED;
 }
 
 function _addFledgeflag(impObj, bid, isFledgeEnabled) {
@@ -807,7 +807,7 @@ function _addFloorFromFloorModule(impObj, bid) {
   // get lowest floor from floorModule
   if (typeof bid.getFloor === 'function' && !config.getConfig('pubmatic.disableFloors')) {
     [BANNER, VIDEO, NATIVE].forEach(mediaType => {
-      if (impObj.hasOwnProperty(mediaType)) {
+      if (Object.prototype.hasOwnProperty.call(impObj, mediaType)) {
         let sizesArray = [];
 
         if (mediaType === 'banner') {
@@ -886,7 +886,7 @@ function _checkMediaType(bid, newBid) {
 }
 
 function _parseNativeResponse(bid, newBid) {
-  if (bid.hasOwnProperty('adm')) {
+  if (Object.prototype.hasOwnProperty.call(bid, 'adm')) {
     var adm = '';
     try {
       adm = JSON.parse(bid.adm.replace(/\\/g, ''));
@@ -1066,7 +1066,7 @@ export const spec = {
         return false;
       }
       // video ad validation
-      if (FEATURES.VIDEO && bid.hasOwnProperty('mediaTypes') && bid.mediaTypes.hasOwnProperty(VIDEO)) {
+      if (FEATURES.VIDEO && Object.prototype.hasOwnProperty.call(bid, 'mediaTypes') && Object.prototype.hasOwnProperty.call(bid.mediaTypes, VIDEO)) {
         // bid.mediaTypes.video.mimes OR bid.params.video.mimes should be present and must be a non-empty array
         let mediaTypesVideoMimes = deepAccess(bid.mediaTypes, 'video.mimes');
         let paramsVideoMimes = deepAccess(bid, 'params.video.mimes');
@@ -1075,21 +1075,21 @@ export const spec = {
           return false;
         }
 
-        if (!bid.mediaTypes[VIDEO].hasOwnProperty('context')) {
+        if (!Object.prototype.hasOwnProperty.call(bid.mediaTypes[VIDEO], 'context')) {
           logError(`${LOG_WARN_PREFIX}: no context specified in bid. Rejecting bid: `, bid);
           return false;
         }
 
         if (bid.mediaTypes[VIDEO].context === 'outstream' &&
           !isStr(bid.params.outstreamAU) &&
-          !bid.hasOwnProperty('renderer') &&
-          !bid.mediaTypes[VIDEO].hasOwnProperty('renderer')) {
+          !Object.prototype.hasOwnProperty.call(bid, 'renderer') &&
+          !Object.prototype.hasOwnProperty.call(bid.mediaTypes[VIDEO], 'renderer')) {
           // we are here since outstream ad-unit is provided without outstreamAU and renderer
           // so it is not a valid video ad-unit
           // but it may be valid banner or native ad-unit
           // so if mediaType banner or Native is present then  we will remove media-type video and return true
 
-          if (bid.mediaTypes.hasOwnProperty(BANNER) || bid.mediaTypes.hasOwnProperty(NATIVE)) {
+          if (Object.prototype.hasOwnProperty.call(bid.mediaTypes, BANNER) || Object.prototype.hasOwnProperty.call(bid.mediaTypes, NATIVE)) {
             delete bid.mediaTypes[VIDEO];
             logWarn(`${LOG_WARN_PREFIX}: for "outstream" bids either outstreamAU parameter must be provided or ad unit supplied renderer is required. Rejecting mediatype Video of bid: `, bid);
             return true;
@@ -1130,12 +1130,12 @@ export const spec = {
       bid = deepClone(originalBid);
       bid.params.adSlot = bid.params.adSlot || '';
       _parseAdSlot(bid);
-      if ((bid.mediaTypes && bid.mediaTypes.hasOwnProperty('video')) || bid.params.hasOwnProperty('video')) {
+      if ((bid.mediaTypes && Object.prototype.hasOwnProperty.call(bid.mediaTypes, 'video')) || Object.prototype.hasOwnProperty.call(bid.params, 'video')) {
         // Nothing to do
       } else {
         // If we have a native mediaType configured alongside banner, its ok if the banner size is not set in width and height
         // The corresponding banner imp object will not be generated, but we still want the native object to be sent, hence the following check
-        if (!(bid.hasOwnProperty('mediaTypes') && bid.mediaTypes.hasOwnProperty(NATIVE)) && bid.params.width === 0 && bid.params.height === 0) {
+        if (!(Object.prototype.hasOwnProperty.call(bid, 'mediaTypes') && Object.prototype.hasOwnProperty.call(bid.mediaTypes, NATIVE)) && bid.params.width === 0 && bid.params.height === 0) {
           logWarn(LOG_WARN_PREFIX + 'Skipping the non-standard adslot: ', bid.params.adSlot, JSON.stringify(bid));
           return;
         }
@@ -1145,18 +1145,18 @@ export const spec = {
       conf.transactionId = bid.ortb2Imp?.ext?.tid;
       if (bidCurrency === '') {
         bidCurrency = bid.params.currency || UNDEFINED;
-      } else if (bid.params.hasOwnProperty('currency') && bidCurrency !== bid.params.currency) {
+      } else if (Object.prototype.hasOwnProperty.call(bid.params, 'currency') && bidCurrency !== bid.params.currency) {
         logWarn(LOG_WARN_PREFIX + 'Currency specifier ignored. Only one currency permitted.');
       }
       bid.params.currency = bidCurrency;
       // check if dctr is added to more than 1 adunit
-      if (bid.params.hasOwnProperty('dctr') && isStr(bid.params.dctr)) {
+      if (Object.prototype.hasOwnProperty.call(bid.params, 'dctr') && isStr(bid.params.dctr)) {
         dctrArr.push(bid.params.dctr);
       }
-      if (bid.params.hasOwnProperty('bcat') && isArray(bid.params.bcat)) {
+      if (Object.prototype.hasOwnProperty.call(bid.params, 'bcat') && isArray(bid.params.bcat)) {
         blockedIabCategories = blockedIabCategories.concat(bid.params.bcat);
       }
-      if (bid.params.hasOwnProperty('acat') && isArray(bid.params.acat)) {
+      if (Object.prototype.hasOwnProperty.call(bid.params, 'acat') && isArray(bid.params.acat)) {
         allowedIabCategories = allowedIabCategories.concat(bid.params.acat);
       }
       var impObj = _createImpressionObject(bid, bidderRequest);
@@ -1388,8 +1388,8 @@ export const spec = {
                       case BANNER:
                         break;
                       case FEATURES.VIDEO && VIDEO:
-                        newBid.width = bid.hasOwnProperty('w') ? bid.w : req.video.w;
-                        newBid.height = bid.hasOwnProperty('h') ? bid.h : req.video.h;
+                        newBid.width = Object.prototype.hasOwnProperty.call(bid, 'w') ? bid.w : req.video.w;
+                        newBid.height = Object.prototype.hasOwnProperty.call(bid, 'h') ? bid.h : req.video.h;
                         newBid.vastXml = bid.adm;
                         _assignRenderer(newBid, request);
                         assignDealTier(newBid, bid, request);

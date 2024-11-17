@@ -193,7 +193,7 @@ function buildVideoImp(bidRequest, imp) {
   const videoParams = { ...videoAdUnitParams, ...videoBidderParams };
 
   VIDEO_ORTB_PARAMS.forEach((param) => {
-    if (videoParams.hasOwnProperty(param)) {
+    if (Object.prototype.hasOwnProperty.call(videoParams, param)) {
       utils.deepSetValue(imp, `video.${param}`, videoParams[param]);
     }
   });

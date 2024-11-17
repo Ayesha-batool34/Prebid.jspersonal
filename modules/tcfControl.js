@@ -123,7 +123,7 @@ export function getGvlid(moduleType, moduleName, fallbackFn) {
         // this behavior is for backwards compatibility; if multiple modules with the same
         // name declare different GVL IDs, pick the bidder's first, then userId, then analytics
         for (const type of GVLID_LOOKUP_PRIORITY) {
-          if (modules.hasOwnProperty(type)) {
+          if (Object.prototype.hasOwnProperty.call(modules, type)) {
             gvlid = modules[type];
             if (type !== moduleType) {
               logWarn(`Multiple GVL IDs found for module '${moduleName}'; using the ${type} module's ID (${gvlid}) instead of the ${moduleType}'s ID (${modules[moduleType]})`);

@@ -354,10 +354,10 @@ describe('kargo adapter tests', function() {
       setCookie = 'valid',
       setLocalStorage = 'valid'
     ) {
-      if (crbValues.hasOwnProperty(setCookie)) {
+      if (Object.prototype.hasOwnProperty.call(crbValues, setCookie)) {
         setCookieValue('krg_crb', crbValues[setCookie]);
       }
-      if (crbValues.hasOwnProperty(`${setLocalStorage}Ls`)) {
+      if (Object.prototype.hasOwnProperty.call(crbValues, `${setLocalStorage}Ls`)) {
         setLocalStorageValue('krg_crb', crbValues[`${setLocalStorage}Ls`]);
       }
     }
@@ -1844,7 +1844,7 @@ describe('kargo adapter tests', function() {
 
       const body = response.body;
       for (const key in body) {
-        if (body.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(body, key)) {
           if (key % 2 !== 0) { // Add auctionConfig to every other object
             body[key].auctionConfig = auctionConfig;
           }

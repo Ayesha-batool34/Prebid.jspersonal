@@ -23,7 +23,7 @@ export function fillBannerImp(imp, bidRequest, context) {
     if (bannerParams.sizes) {
       banner.format = sizesToSizeTuples(bannerParams.sizes).map(sizeTupleToRtbSize);
     }
-    if (bannerParams.hasOwnProperty('pos')) {
+    if (Object.prototype.hasOwnProperty.call(bannerParams, 'pos')) {
       banner.pos = bannerParams.pos;
     }
 

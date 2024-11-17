@@ -49,7 +49,7 @@ export function checkDchainSyntax(bid, mode) {
     appendFailMsg(`dchain.ver` + shouldBeAString);
   }
 
-  if (dchainObj.hasOwnProperty('ext')) {
+  if (Object.prototype.hasOwnProperty.call(dchainObj, 'ext')) {
     if (!isPlainObject(dchainObj.ext)) {
       appendFailMsg(`dchain.ext` + shouldBeAnObject);
     }

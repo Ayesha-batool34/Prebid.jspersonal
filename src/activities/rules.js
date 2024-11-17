@@ -24,7 +24,7 @@ export function ruleRegistry(logger = prefixLog('Activity control:')) {
 
   function logResult({activity, name, allow, reason, component}) {
     const msg = `${name} ${allow ? 'allowed' : 'denied'} '${activity}' for '${component}'${reason ? ':' : ''}`;
-    const deduping = dupes.hasOwnProperty(msg);
+    const deduping = Object.prototype.hasOwnProperty.call(dupes, msg);
     if (deduping) {
       clearTimeout(dupes[msg]);
     }

@@ -50,9 +50,9 @@ export const spec = {
       if (params.incognito) payload.ic = params.incognito;
       if (params.dsmi) payload.smi = params.dsmi;
       if (params.optout) payload.out = params.optout;
-      if (bidRequest && bidRequest.hasOwnProperty('ortb2Imp') && bidRequest.ortb2Imp.hasOwnProperty('ext')) {
+      if (bidRequest && Object.prototype.hasOwnProperty.call(bidRequest, 'ortb2Imp') && Object.prototype.hasOwnProperty.call(bidRequest.ortb2Imp, 'ext')) {
         payload.ext = bidRequest.ortb2Imp.ext;
-        if (bidRequest.ortb2Imp.ext.hasOwnProperty('gpid')) payload.pubAdCode = bidRequest.ortb2Imp.ext.gpid.split('#')[0];
+        if (Object.prototype.hasOwnProperty.call(bidRequest.ortb2Imp.ext, 'gpid')) payload.pubAdCode = bidRequest.ortb2Imp.ext.gpid.split('#')[0];
       }
       payloadArr.push(payload);
       ctr++;

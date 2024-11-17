@@ -120,8 +120,8 @@ export const spec = {
   isBidRequestValid: function (bidRequest) {
     return bidRequest &&
       bidRequest.params &&
-      bidRequest.params.hasOwnProperty('widgetId') &&
-      bidRequest.params.hasOwnProperty('websiteId') &&
+      Object.prototype.hasOwnProperty.call(bidRequest.params, 'widgetId') &&
+      Object.prototype.hasOwnProperty.call(bidRequest.params, 'websiteId') &&
       !isNaN(bidRequest.params.widgetId) &&
       !isNaN(bidRequest.params.websiteId) &&
       isValidSize(getImageSize(bidRequest));
@@ -136,7 +136,7 @@ export const spec = {
     }
     return validBidRequests.map(bidRequest => {
       if (bidRequest.params) {
-        const mediaType = bidRequest.hasOwnProperty('nativeParams') ? 1 : 2;
+        const mediaType = Object.prototype.hasOwnProperty.call(bidRequest, 'nativeParams') ? 1 : 2;
         const [imageWidth, imageHeight] = getImageSize(bidRequest);
         const widgetId = bidRequest.params.widgetId;
         const websiteId = bidRequest.params.websiteId;

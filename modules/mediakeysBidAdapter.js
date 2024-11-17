@@ -269,7 +269,7 @@ function createNativeImp(bid) {
   }
 
   Object.keys(ORTB_NATIVE_PARAMS).forEach(name => {
-    if (extraParams.hasOwnProperty(name)) {
+    if (Object.prototype.hasOwnProperty.call(extraParams, name)) {
       if (ORTB_NATIVE_PARAMS[name](extraParams[name])) {
         nativeObject[name] = extraParams[name];
       } else {
@@ -303,7 +303,7 @@ function createNativeImp(bid) {
   }
 
   for (let key in nativeParams) {
-    if (nativeParams.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(nativeParams, key)) {
       const internalNativeAsset = find(NATIVE_ASSETS_MAPPING, ref => ref.name === key);
       if (!internalNativeAsset) {
         logWarn(`${BIDDER_CODE}: the asset "${key}" has not been found in Prebid assets map. Skipped for request.`);
@@ -411,7 +411,7 @@ function createVideoImp(bid) {
 
   // Only whitelisted OpenRTB options need to be validated.
   Object.keys(ORTB_VIDEO_PARAMS).forEach(name => {
-    if (videoParams.hasOwnProperty(name)) {
+    if (Object.prototype.hasOwnProperty.call(videoParams, name)) {
       if (ORTB_VIDEO_PARAMS[name](videoParams[name])) {
         video[name] = videoParams[name];
       } else {

@@ -203,7 +203,7 @@ function bidToShortTag(bid) {
 function stringifyPayload(payload) {
   let payloadString = [];
   for (var key in payload) {
-    if (payload.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(payload, key)) {
       payloadString.push(key + '=' + payload[key]);
     }
   }

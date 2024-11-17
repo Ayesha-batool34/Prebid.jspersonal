@@ -152,7 +152,7 @@ export function isOpenRTBBidRequestValid(ortb) {
     return false;
   }
 
-  if (ortb.hasOwnProperty('eventtrackers') && !Array.isArray(ortb.eventtrackers)) {
+  if (Object.prototype.hasOwnProperty.call(ortb, 'eventtrackers') && !Array.isArray(ortb.eventtrackers)) {
     logError('ortb.eventtrackers is not an array. Eventtrackers: ', ortb.eventtrackers);
     return false;
   }
@@ -294,7 +294,7 @@ export function fireImpressionTrackers(nativeResponse, {runMarkup = (mkup) => in
     .filter(tracker => tracker.event === TRACKER_EVENTS.impression);
 
   let {img, js} = impTrackers.reduce((tally, tracker) => {
-    if (TRACKER_METHODS.hasOwnProperty(tracker.method)) {
+    if (Object.prototype.hasOwnProperty.call(TRACKER_METHODS, tracker.method)) {
       tally[TRACKER_METHODS[tracker.method]].push(tracker.url)
     }
     return tally;
@@ -414,7 +414,7 @@ function getNativeAssets(nativeProps, keys, ext = false) {
     .forEach(([key, value]) => {
       if (ext === false && key === 'ext') {
         assets.push(...getNativeAssets(value, keys, true));
-      } else if (ext || NATIVE_KEYS.hasOwnProperty(key)) {
+      } else if (ext || Object.prototype.hasOwnProperty.call(NATIVE_KEYS, key)) {
         assets.push({key, value: getAssetValue(value)});
       }
     });
@@ -511,7 +511,7 @@ export function toOrtbNativeRequest(legacyNativeAssets) {
   for (let key in legacyNativeAssets) {
     // skip conversion for non-asset keys
     if (NATIVE_KEYS_THAT_ARE_NOT_ASSETS.includes(key)) continue;
-    if (!NATIVE_KEYS.hasOwnProperty(key)) {
+    if (!Object.prototype.hasOwnProperty.call(NATIVE_KEYS, key)) {
       logError(`Unrecognized native asset code: ${key}. Asset will be ignored.`);
       continue;
     }

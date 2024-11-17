@@ -117,7 +117,7 @@ export const spec = {
 
     const currency = serverResponse.cur || DEFAULT_CURRENCY;
     serverResponse.seatbid.forEach(sBid => {
-      if (sBid.hasOwnProperty('bid')) {
+      if (Object.prototype.hasOwnProperty.call(sBid, 'bid')) {
         sBid.bid.forEach(iBid => {
           if (iBid.price !== 0) {
             const bid = newBid(iBid, currency);

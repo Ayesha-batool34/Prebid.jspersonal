@@ -73,7 +73,7 @@ export const spec = {
   interpretResponse: function (responseObj, bidRequest) {
     responseObj = responseObj.body;
     // check overall response
-    if (responseObj == null || typeof responseObj !== 'object' || !responseObj.hasOwnProperty('ad')) {
+    if (responseObj == null || typeof responseObj !== 'object' || !Object.prototype.hasOwnProperty.call(responseObj, 'ad')) {
       return [];
     }
 

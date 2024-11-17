@@ -56,11 +56,11 @@ export const spec = {
       }
     }
     try {
-      if (arrGetParams.hasOwnProperty('auction')) {
+      if (Object.prototype.hasOwnProperty.call(arrGetParams, 'auction')) {
         logInfo('GET: setting auction endpoint to: ' + arrGetParams.auction);
         this.propertyBag.config.auctionUrl = arrGetParams.auction;
       }
-      if (arrGetParams.hasOwnProperty('cookiesync')) {
+      if (Object.prototype.hasOwnProperty.call(arrGetParams, 'cookiesync')) {
         logInfo('GET: setting cookiesync to: ' + arrGetParams.cookiesync);
         this.propertyBag.config.cookieSyncUrl = arrGetParams.cookiesync;
       }
@@ -78,7 +78,7 @@ export const spec = {
     logInfo('isBidRequestValid : ', config.getConfig(), bid);
     let adUnitCode = bid.adUnitCode; // adunit[n].code
     let err1 = 'VALIDATION FAILED : missing {param} : siteId, placementId and publisherId are REQUIRED';
-    if (!(bid.params.hasOwnProperty('placementId'))) {
+    if (!(Object.prototype.hasOwnProperty.call(bid.params, 'placementId'))) {
       logError(err1.replace('{param}', 'placementId'), adUnitCode);
       return false;
     }
@@ -86,7 +86,7 @@ export const spec = {
       logError('VALIDATION FAILED : placementId must be exactly 10 numeric characters', adUnitCode);
       return false;
     }
-    if (!(bid.params.hasOwnProperty('publisherId'))) {
+    if (!(Object.prototype.hasOwnProperty.call(bid.params, 'publisherId'))) {
       logError(err1.replace('{param}', 'publisherId'), adUnitCode);
       return false;
     }
@@ -94,7 +94,7 @@ export const spec = {
       logError('VALIDATION FAILED : publisherId must be exactly 12 alphanumeric characters including hyphens', adUnitCode);
       return false;
     }
-    if (!(bid.params.hasOwnProperty('siteId'))) {
+    if (!(Object.prototype.hasOwnProperty.call(bid.params, 'siteId'))) {
       logError(err1.replace('{param}', 'siteId'), adUnitCode);
       return false;
     }
@@ -102,11 +102,11 @@ export const spec = {
       logError('VALIDATION FAILED : siteId must be exactly 10 numeric characters', adUnitCode);
       return false;
     }
-    if (bid.params.hasOwnProperty('customParams')) {
+    if (Object.prototype.hasOwnProperty.call(bid.params, 'customParams')) {
       logError('VALIDATION FAILED : customParams should be renamed to customData', adUnitCode);
       return false;
     }
-    if (bid.params.hasOwnProperty('customData')) {
+    if (Object.prototype.hasOwnProperty.call(bid.params, 'customData')) {
       if (!Array.isArray(bid.params.customData)) {
         logError('VALIDATION FAILED : customData is not an Array', adUnitCode);
         return false;
@@ -115,7 +115,7 @@ export const spec = {
         logError('VALIDATION FAILED : customData is an array but does not contain any elements', adUnitCode);
         return false;
       }
-      if (!(bid.params.customData[0]).hasOwnProperty('targeting')) {
+      if (!Object.prototype.hasOwnProperty.call(bid.params.customData[0], 'targeting')) {
         logError('VALIDATION FAILED : customData[0] does not contain "targeting"', adUnitCode);
         return false;
       }
@@ -168,19 +168,19 @@ export const spec = {
       let parsed = parseUrl(this.getRefererInfo().page);
       obj.secure = parsed.protocol === 'https' ? 1 : 0;
       let arrBannerSizes = [];
-      if (!npBidRequest.hasOwnProperty('mediaTypes')) {
-        if (npBidRequest.hasOwnProperty('sizes')) {
+      if (!Object.prototype.hasOwnProperty.call(npBidRequest, 'mediaTypes')) {
+        if (Object.prototype.hasOwnProperty.call(npBidRequest, 'sizes')) {
           logInfo('no mediaTypes detected - will use the sizes array in the config root');
           arrBannerSizes = npBidRequest.sizes;
         } else {
           logInfo('Cannot set sizes for banner type');
         }
       } else {
-        if (npBidRequest.mediaTypes.hasOwnProperty(BANNER)) {
+        if (Object.prototype.hasOwnProperty.call(npBidRequest.mediaTypes, BANNER)) {
           arrBannerSizes = npBidRequest.mediaTypes[BANNER].sizes; /* Note - if there is a sizes element in the config root it will be pushed into here */
           logInfo('setting banner size from the mediaTypes.banner element for bidId ' + obj.id + ': ', arrBannerSizes);
         }
-        if (npBidRequest.mediaTypes.hasOwnProperty(NATIVE)) {
+        if (Object.prototype.hasOwnProperty.call(npBidRequest.mediaTypes, NATIVE)) {
           obj.native = npBidRequest.mediaTypes[NATIVE];
           logInfo('setting native object from the mediaTypes.native element: ' + obj.id + ':', obj.native);
         }
@@ -199,13 +199,13 @@ export const spec = {
       deepSetValue(obj, 'ext.prebid', {'storedrequest': {'id': placementId}});
       obj.ext['newspassid'] = {};
       obj.ext['newspassid'].adUnitCode = npBidRequest.adUnitCode; // eg. 'mpu'
-      if (npBidRequest.params.hasOwnProperty('customData')) {
+      if (Object.prototype.hasOwnProperty.call(npBidRequest.params, 'customData')) {
         obj.ext['newspassid'].customData = npBidRequest.params.customData;
       }
       logInfo(`obj.ext.newspassid is `, obj.ext['newspassid']);
       if (isTestMode != null) {
         logInfo('setting isTestMode to ', isTestMode);
-        if (obj.ext['newspassid'].hasOwnProperty('customData')) {
+        if (Object.prototype.hasOwnProperty.call(obj.ext['newspassid'], 'customData')) {
           for (let i = 0; i < obj.ext['newspassid'].customData.length; i++) {
             obj.ext['newspassid'].customData[i]['targeting']['nptestmode'] = isTestMode;
           }
@@ -237,7 +237,7 @@ export const spec = {
     extObj['newspassid']['np_rw'] = placementIdOverrideFromGetParam ? 1 : 0;
     if (validBidRequests.length > 0) {
       let userIds = this.cookieSyncBag.userIdObject; // 2021-01-06 - slight optimisation - we've already found this info
-      if (userIds.hasOwnProperty('pubcid')) {
+      if (Object.prototype.hasOwnProperty.call(userIds, 'pubcid')) {
         extObj['newspassid'].pubcid = userIds.pubcid;
       }
     }
@@ -245,10 +245,10 @@ export const spec = {
     let whitelistAdserverKeys = config.getConfig('newspassid.np_whitelist_adserver_keys');
     let useWhitelistAdserverKeys = isArray(whitelistAdserverKeys) && whitelistAdserverKeys.length > 0;
     extObj['newspassid']['np_kvp_rw'] = useWhitelistAdserverKeys ? 1 : 0;
-    if (getParams.hasOwnProperty('npf')) { extObj['newspassid']['npf'] = getParams.npf === 'true' || getParams.npf === '1' ? 1 : 0; }
-    if (getParams.hasOwnProperty('nppf')) { extObj['newspassid']['nppf'] = getParams.nppf === 'true' || getParams.nppf === '1' ? 1 : 0; }
-    if (getParams.hasOwnProperty('nprp') && getParams.nprp.match(/^[0-3]$/)) { extObj['newspassid']['nprp'] = parseInt(getParams.nprp); }
-    if (getParams.hasOwnProperty('npip') && getParams.npip.match(/^\d+$/)) { extObj['newspassid']['npip'] = parseInt(getParams.npip); }
+    if (Object.prototype.hasOwnProperty.call(getParams, 'npf')) { extObj['newspassid']['npf'] = getParams.npf === 'true' || getParams.npf === '1' ? 1 : 0; }
+    if (Object.prototype.hasOwnProperty.call(getParams, 'nppf')) { extObj['newspassid']['nppf'] = getParams.nppf === 'true' || getParams.nppf === '1' ? 1 : 0; }
+    if (Object.prototype.hasOwnProperty.call(getParams, 'nprp') && getParams.nprp.match(/^[0-3]$/)) { extObj['newspassid']['nprp'] = parseInt(getParams.nprp); }
+    if (Object.prototype.hasOwnProperty.call(getParams, 'npip') && getParams.npip.match(/^\d+$/)) { extObj['newspassid']['npip'] = parseInt(getParams.npip); }
     if (this.propertyBag.endpointOverride != null) { extObj['newspassid']['origin'] = this.propertyBag.endpointOverride; }
     let userExtEids = deepAccess(validBidRequests, '0.userIdAsEids', []); // generate the UserIDs in the correct format for UserId module
     npRequest.site = {
@@ -313,7 +313,7 @@ export const spec = {
     logInfo(`serverResponse, request`, deepClone(serverResponse), deepClone(request));
     serverResponse = serverResponse.body || {};
     let aucId = serverResponse.id; // this will be correct for single requests and non-single
-    if (!serverResponse.hasOwnProperty('seatbid')) {
+    if (!Object.prototype.hasOwnProperty.call(serverResponse, 'seatbid')) {
       return [];
     }
     if (typeof serverResponse.seatbid !== 'object') {
@@ -351,7 +351,7 @@ export const spec = {
             adserverTargeting['np_' + bidderName + '_adv'] = String(allBidsForThisBidid[bidderName].adomain);
             adserverTargeting['np_' + bidderName + '_adId'] = String(allBidsForThisBidid[bidderName].adId);
             adserverTargeting['np_' + bidderName + '_pb_r'] = getRoundedBid(allBidsForThisBidid[bidderName].price, allBidsForThisBidid[bidderName].ext.prebid.type);
-            if (allBidsForThisBidid[bidderName].hasOwnProperty('dealid')) {
+            if (Object.prototype.hasOwnProperty.call(allBidsForThisBidid[bidderName], 'dealid')) {
               adserverTargeting['np_' + bidderName + '_dealid'] = String(allBidsForThisBidid[bidderName].dealid);
             }
           });
@@ -443,10 +443,10 @@ export const spec = {
   findAllUserIds(bidRequest) {
     var ret = {};
     let searchKeysSingle = ['pubcid', 'tdid', 'idl_env', 'criteoId', 'lotamePanoramaId', 'fabrickId'];
-    if (bidRequest.hasOwnProperty('userId')) {
+    if (Object.prototype.hasOwnProperty.call(bidRequest, 'userId')) {
       for (let arrayId in searchKeysSingle) {
         let key = searchKeysSingle[arrayId];
-        if (bidRequest.userId.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(bidRequest.userId, key)) {
           if (typeof (bidRequest.userId[key]) == 'string') {
             ret[key] = bidRequest.userId[key];
           } else if (typeof (bidRequest.userId[key]) == 'object') {
@@ -470,7 +470,7 @@ export const spec = {
         ret['sharedid'] = sharedid;
       }
     }
-    if (!ret.hasOwnProperty('pubcid')) {
+    if (!Object.prototype.hasOwnProperty.call(ret, 'pubcid')) {
       let pubcid = deepAccess(bidRequest, 'crumbs.pubcid');
       if (pubcid) {
         ret['pubcid'] = pubcid; // if built with old pubCommonId module
@@ -483,7 +483,7 @@ export const spec = {
   },
   getPlacementIdOverrideFromGetParam() {
     let arr = this.getGetParametersAsObject();
-    if (arr.hasOwnProperty('npstoredrequest')) {
+    if (Object.prototype.hasOwnProperty.call(arr, 'npstoredrequest')) {
       if (this.isValidPlacementId(arr['npstoredrequest'])) {
         logInfo(`using GET npstoredrequest ` + arr['npstoredrequest'] + ' to replace placementId');
         return arr['npstoredrequest'];
@@ -499,7 +499,7 @@ export const spec = {
     return parsed.search;
   },
   getRefererInfo() {
-    if (getRefererInfo().hasOwnProperty('location')) {
+    if (Object.prototype.hasOwnProperty.call(getRefererInfo(), 'location')) {
       logInfo('FOUND location on getRefererInfo OK (prebid >= 7); will use getRefererInfo for location & page');
       return getRefererInfo();
     } else {
@@ -574,7 +574,7 @@ export const spec = {
       let thisSeat = serverResponseSeatBid[j].seat;
       for (let k = 0; k < theseBids.length; k++) {
         if (theseBids[k].impid === matchBidId) {
-          if (objBids.hasOwnProperty(thisSeat)) { // > 1 bid for an adunit from a bidder - only use the one with the highest bid
+          if (Object.prototype.hasOwnProperty.call(objBids, thisSeat)) { // > 1 bid for an adunit from a bidder - only use the one with the highest bid
             if (objBids[thisSeat]['price'] < theseBids[k].price) {
               objBids[thisSeat] = theseBids[k];
             }
@@ -642,7 +642,7 @@ export function getRoundedBid(price, mediaType) {
     'low': 'low',
     'dense': 'dense'
   };
-  if (granularityNamePriceStringsKeyMapping.hasOwnProperty(theConfigKey)) {
+  if (Object.prototype.hasOwnProperty.call(granularityNamePriceStringsKeyMapping, theConfigKey)) {
     let priceStringsKey = granularityNamePriceStringsKeyMapping[theConfigKey];
     logInfo('getRoundedBid: looking for priceStringsKey:', priceStringsKey);
     return priceStringsObj[priceStringsKey];

@@ -56,7 +56,7 @@ export function BidDataMap() {
    * @param {Integer} index - The index value of the bidData
    */
   function addKeyReference(key, index) {
-    if (!referenceMap.hasOwnProperty(key)) {
+    if (!Object.prototype.hasOwnProperty.call(referenceMap, key)) {
       referenceMap[key] = index
     }
   }
@@ -87,7 +87,7 @@ export function BidDataMap() {
    */
   function getBidData(key) {
     const stringKey = String(key)
-    if (referenceMap.hasOwnProperty(stringKey)) {
+    if (Object.prototype.hasOwnProperty.call(referenceMap, stringKey)) {
       return bids[referenceMap[stringKey]]
     }
   }

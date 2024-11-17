@@ -484,7 +484,7 @@ describe('TrafficgateOpenxRtbAdapter', function () {
         describe('ortb2Imp', function() {
           describe('ortb2Imp.ext.data.pbadslot', function() {
             beforeEach(function () {
-              if (bidRequests[0].hasOwnProperty('ortb2Imp')) {
+              if (Object.prototype.hasOwnProperty.call(bidRequests[0], 'ortb2Imp')) {
                 delete bidRequests[0].ortb2Imp;
               }
             });
@@ -531,7 +531,7 @@ describe('TrafficgateOpenxRtbAdapter', function () {
 
           describe('ortb2Imp.ext.data.adserver', function() {
             beforeEach(function () {
-              if (bidRequests[0].hasOwnProperty('ortb2Imp')) {
+              if (Object.prototype.hasOwnProperty.call(bidRequests[0], 'ortb2Imp')) {
                 delete bidRequests[0].ortb2Imp;
               }
             });
@@ -582,7 +582,7 @@ describe('TrafficgateOpenxRtbAdapter', function () {
 
           describe('ortb2Imp.ext.data.other', function() {
             beforeEach(function () {
-              if (bidRequests[0].hasOwnProperty('ortb2Imp')) {
+              if (Object.prototype.hasOwnProperty.call(bidRequests[0], 'ortb2Imp')) {
                 delete bidRequests[0].ortb2Imp;
               }
             });

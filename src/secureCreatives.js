@@ -69,7 +69,7 @@ export function receiveMessage(ev) {
     return;
   }
 
-  if (data && data.adId && data.message && HANDLER_MAP.hasOwnProperty(data.message)) {
+  if (data && data.adId && data.message && Object.prototype.hasOwnProperty.call(HANDLER_MAP, data.message)) {
     return getBidToRender(data.adId, data.message === MESSAGES.REQUEST).then(adObject => {
       HANDLER_MAP[data.message](ensureAdId(data.adId, getReplier(ev)), data, adObject);
     })

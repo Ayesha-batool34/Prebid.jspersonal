@@ -459,7 +459,7 @@ export function setupAdUnitMediaTypes(adUnits, labels) {
   const duplCounter = {};
   return adUnits.reduce((result, adUnit) => {
     const instance = (() => {
-      if (!duplCounter.hasOwnProperty(adUnit.code)) {
+      if (!Object.prototype.hasOwnProperty.call(duplCounter, adUnit.code)) {
         duplCounter[adUnit.code] = 1;
       }
       return duplCounter[adUnit.code]++;

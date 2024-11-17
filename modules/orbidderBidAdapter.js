@@ -24,7 +24,7 @@ function isBidResponseValid(bidResponse) {
       requiredKeys = requiredKeys.concat(['width', 'height', 'ad']);
       break;
     case NATIVE:
-      if (!bidResponse.native.hasOwnProperty('impressionTrackers')) {
+      if (!Object.prototype.hasOwnProperty.call(bidResponse.native, 'impressionTrackers')) {
         return false
       }
       break;
@@ -33,7 +33,7 @@ function isBidResponseValid(bidResponse) {
   }
 
   for (const key of requiredKeys) {
-    if (!bidResponse.hasOwnProperty(key)) {
+    if (!Object.prototype.hasOwnProperty.call(bidResponse, key)) {
       return false
     }
   }

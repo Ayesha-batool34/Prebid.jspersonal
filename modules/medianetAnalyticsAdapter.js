@@ -251,7 +251,7 @@ class AdSlot {
   }
 
   getShouldBeLogged(logType) {
-    if (!config.shouldBeLogged.hasOwnProperty(logType)) {
+    if (!Object.prototype.hasOwnProperty.call(config.shouldBeLogged, logType)) {
       config.shouldBeLogged[logType] = isSampled();
     }
     return config.shouldBeLogged[logType];

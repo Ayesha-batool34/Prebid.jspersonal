@@ -104,7 +104,7 @@ export const spec = {
       var url = [];
 
       for (key in reqData) {
-        if (reqData.hasOwnProperty(key) && reqData[key]) { url.push(key, '=', reqData[key], '&'); }
+        if (Object.prototype.hasOwnProperty.call(reqData, key) && reqData[key]) { url.push(key, '=', reqData[key], '&'); }
       }
 
       return encodeURIComponent(btoa(url.join('').slice(0, -1)));

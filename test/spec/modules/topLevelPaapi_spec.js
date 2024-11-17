@@ -59,7 +59,7 @@ describe('topLevelPaapi', () => {
         adUnits: {}
       };
     }
-    if (!auction.adUnits.hasOwnProperty(adUnitCode)) {
+    if (!Object.prototype.hasOwnProperty.call(auction.adUnits, adUnitCode)) {
       auction.adUnits[adUnitCode] = {
         code: adUnitCode,
         ortb2Imp: {

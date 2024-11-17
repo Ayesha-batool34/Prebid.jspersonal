@@ -100,7 +100,7 @@ describe('FPD enrichment', () => {
 
       it('should not set keywords if meta tag is not present', () => {
         return fpd(ORTB2).then(ortb2 => {
-          expect(ortb2[section].hasOwnProperty('keywords')).to.be.false;
+          expect(Object.prototype.hasOwnProperty.call(ortb2[section], 'keywords')).to.be.false;
         });
       });
     })

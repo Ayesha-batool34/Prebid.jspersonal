@@ -17,7 +17,7 @@ config.getConfig('ttlBuffer', (cfg) => {
 })
 
 export function getTTL(bid) {
-  return bid.ttl - (bid.hasOwnProperty('ttlBuffer') ? bid.ttlBuffer : TTL_BUFFER);
+  return bid.ttl - (Object.prototype.hasOwnProperty.call(bid, 'ttlBuffer') ? bid.ttlBuffer : TTL_BUFFER);
 }
 
 export function onTTLBufferChange(listener) {

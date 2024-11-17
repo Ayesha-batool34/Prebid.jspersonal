@@ -286,7 +286,7 @@ function interpretResponse(serverResponse, request) {
  */
 function createTrackingParams(data, klass) {
   const bidId = data.bidId || data.requestId;
-  if (!BID_METADATA.hasOwnProperty(bidId)) {
+  if (!Object.prototype.hasOwnProperty.call(BID_METADATA, bidId)) {
     return null;
   }
   const {referer, transactionId} = BID_METADATA[bidId];

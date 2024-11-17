@@ -76,7 +76,7 @@ export const spec = {
   buildRequests,
   interpretResponse: interpretResponseBuilder({
     addtlBidValidation(bid) {
-      return bid.hasOwnProperty('netRevenue')
+      return Object.prototype.hasOwnProperty.call(bid, 'netRevenue')
     }
   })
 };

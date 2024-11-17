@@ -62,10 +62,10 @@ export const spec = {
       let stylesParams = getBidIdParameter('style', bidRequestParams);
       let stylesParamsArray = {};
       for (let currentValue in stylesParams) {
-        if (stylesParams.hasOwnProperty(currentValue)) {
+        if (Object.prototype.hasOwnProperty.call(stylesParams, currentValue)) {
           let currentStyle = stylesParams[currentValue];
           for (let field in currentStyle) {
-            if (currentStyle.hasOwnProperty(field)) {
+            if (Object.prototype.hasOwnProperty.call(currentStyle, field)) {
               let styleField = styleParamsMap[currentValue + '.' + field];
               if (typeof styleField !== 'undefined') {
                 stylesParamsArray[styleField] = currentStyle[field];
@@ -78,7 +78,7 @@ export const spec = {
       let customParams = getBidIdParameter('customParams', bidRequestParams);
       let customParamsArray = {};
       for (let customField in customParams) {
-        if (customParams.hasOwnProperty(customField)) {
+        if (Object.prototype.hasOwnProperty.call(customParams, customField)) {
           customParamsArray['c.' + customField] = customParams[customField];
         }
       }

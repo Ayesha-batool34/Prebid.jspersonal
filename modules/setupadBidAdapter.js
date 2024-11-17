@@ -42,7 +42,7 @@ const converter = ortbConverter({
       'ext.prebid.storedrequest.id',
       getBidIdParameter(
         'account_id',
-        bidderRequest.bids.find((bid) => bid.hasOwnProperty('params')).params
+        bidderRequest.bids.find((bid) => Object.prototype.hasOwnProperty.call(bid, 'params')).params
       )
     );
     deepSetValue(request, 'setupad', 'adapter');
@@ -161,7 +161,7 @@ export const spec = {
     if (!placementIds) return;
 
     // find the winning bidder by using creativeId as identification
-    if (biddersCreativeIds.hasOwnProperty(bid.creativeId) && biddersCreativeIds[bid.creativeId]) {
+    if (Object.prototype.hasOwnProperty.call(biddersCreativeIds, bid.creativeId) && biddersCreativeIds[bid.creativeId]) {
       bidder = biddersCreativeIds[bid.creativeId];
     }
 

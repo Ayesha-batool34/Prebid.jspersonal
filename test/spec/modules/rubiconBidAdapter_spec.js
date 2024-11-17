@@ -1628,7 +1628,7 @@ describe('the rubicon adapter', function () {
         describe('Prebid AdSlot', function () {
           beforeEach(function () {
             // enforce that the bid at 0 does not have a 'context' property
-            if (bidderRequest.bids[0].hasOwnProperty('ortb2Imp')) {
+            if (Object.prototype.hasOwnProperty.call(bidderRequest.bids[0], 'ortb2Imp')) {
               delete bidderRequest.bids[0].ortb2Imp;
             }
           });
@@ -1852,7 +1852,7 @@ describe('the rubicon adapter', function () {
         describe('GAM ad unit', function () {
           beforeEach(function () {
             // enforce that the bid at 0 does not have a 'context' property
-            if (bidderRequest.bids[0].hasOwnProperty('ortb2Imp')) {
+            if (Object.prototype.hasOwnProperty.call(bidderRequest.bids[0], 'ortb2Imp')) {
               delete bidderRequest.bids[0].ortb2Imp;
             }
           });
@@ -2137,7 +2137,7 @@ describe('the rubicon adapter', function () {
           describe('ortb2imp sent to video bids', function () {
             beforeEach(function () {
             // initialize
-              if (bidderRequest.bids[0].hasOwnProperty('ortb2Imp')) {
+              if (Object.prototype.hasOwnProperty.call(bidderRequest.bids[0], 'ortb2Imp')) {
                 delete bidderRequest.bids[0].ortb2Imp;
               }
             });

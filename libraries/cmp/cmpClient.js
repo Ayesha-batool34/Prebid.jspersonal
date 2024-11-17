@@ -63,7 +63,7 @@ export function cmpClient(
     if (json?.[cmpDataPkgName]?.callId) {
       const payload = json[cmpDataPkgName];
 
-      if (cmpCallbacks.hasOwnProperty(payload.callId)) {
+      if (Object.prototype.hasOwnProperty.call(cmpCallbacks, payload.callId)) {
         cmpCallbacks[payload.callId](...callbackArgs.map(name => payload[name]));
       }
     }

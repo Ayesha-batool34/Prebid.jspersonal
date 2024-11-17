@@ -2772,7 +2772,7 @@ describe('IndexexchangeAdapter', function () {
       it('should have native request', () => {
         const nativeImpression = extractPayload(request[1]).imp[0];
 
-        expect(request[1].data.hasOwnProperty('v')).to.equal(false);
+        expect(Object.prototype.hasOwnProperty.call(request[1].data, 'v')).to.equal(false);
         expect(nativeImpression.id).to.equal(DEFAULT_NATIVE_VALID_BID[0].bidId);
         expect(nativeImpression.native).to.deep.equal(DEFAULT_NATIVE_IMP);
       });
@@ -3161,7 +3161,7 @@ describe('IndexexchangeAdapter', function () {
       const request = spec.buildRequests(DEFAULT_NATIVE_VALID_BID, DEFAULT_OPTION);
       const nativeImpression = extractPayload(request[0]).imp[0];
 
-      expect(request[0].data.hasOwnProperty('v')).to.equal(false);
+      expect(Object.prototype.hasOwnProperty.call(request[0].data, 'v')).to.equal(false);
       expect(nativeImpression.id).to.equal(DEFAULT_NATIVE_VALID_BID[0].bidId);
       expect(nativeImpression.native).to.deep.equal(DEFAULT_NATIVE_IMP);
     });

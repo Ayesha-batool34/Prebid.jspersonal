@@ -161,7 +161,7 @@ window.apntag = {
   tags: createTagAST(),
   setKeywords: function(key, params, options) {
     var self = this;
-    if (!self.tags.hasOwnProperty(key)) {
+    if (!Object.prototype.hasOwnProperty.call(self.tags, key)) {
       return;
     }
     self.tags[key].keywords = this.tags[key].keywords || {};
@@ -172,7 +172,7 @@ window.apntag = {
       });
     } else {
       utils._each(params, function (param, id) {
-        if (!self.tags[key].keywords.hasOwnProperty(id)) {
+        if (!Object.prototype.hasOwnProperty.call(self.tags[key].keywords, id)) {
           self.tags[key].keywords[id] = param;
         } else if (!utils.isArray(self.tags[key].keywords[id])) {
           self.tags[key].keywords[id] = [self.tags[key].keywords[id]].concat(param);
@@ -384,7 +384,7 @@ describe('Unit: Prebid Module', function () {
 
       // Ensure targeting for both ad placements includes the custom key.
       assert.equal(
-        targeting['/19968336/header-bid-tag-0'].hasOwnProperty('always_use_me'),
+        Object.prototype.hasOwnProperty.call(targeting['/19968336/header-bid-tag-0'], 'always_use_me'),
         true
       );
 

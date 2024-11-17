@@ -14,7 +14,7 @@ export const ORTB_MTYPES = {
 export function setResponseMediaType(bidResponse, bid, context) {
   if (bidResponse.mediaType) return;
   const mediaType = context.mediaType;
-  if (!mediaType && !ORTB_MTYPES.hasOwnProperty(bid.mtype)) {
+  if (!mediaType && !Object.prototype.hasOwnProperty.call(ORTB_MTYPES, bid.mtype)) {
     throw new Error('Cannot determine mediaType for response')
   }
   bidResponse.mediaType = mediaType || ORTB_MTYPES[bid.mtype];

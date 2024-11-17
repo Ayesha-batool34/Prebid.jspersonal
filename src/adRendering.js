@@ -117,7 +117,7 @@ if (FEATURES.NATIVE) {
 
 function creativeMessageHandler(deps) {
   return function (type, data, bidResponse) {
-    if (HANDLERS.hasOwnProperty(type)) {
+    if (Object.prototype.hasOwnProperty.call(HANDLERS, type)) {
       HANDLERS[type](data, bidResponse, deps);
     }
   }

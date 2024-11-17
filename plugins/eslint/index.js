@@ -85,7 +85,7 @@ module.exports = {
         return Object.assign(noGlobal.create(context), {
           MemberExpression(node) {
             const name = getName(node.property);
-            if (node.object.name === 'window' && globals.hasOwnProperty(name)) {
+            if (node.object.name === 'window' && Object.prototype.hasOwnProperty.call(globals, name)) {
               const customMessage = globals[name];
               context.report({
                 node,

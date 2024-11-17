@@ -55,7 +55,7 @@ export function normalizer({nullify = [], move = {}, fn}, fields = FIELDS) {
             const remap = move[field] || {};
             const done = [];
             cd[field].forEach((el, i) => {
-              const [dest, moved] = remap.hasOwnProperty(i) ? [remap[i], true] : [[i], false];
+              const [dest, moved] = Object.prototype.hasOwnProperty.call(remap, i) ? [remap[i], true] : [[i], false];
               dest.forEach(d => {
                 if (d < len && !done.includes(d)) {
                   val[d] = el;
@@ -144,7 +144,7 @@ export const getSections = (() => {
       const logger = prefixLog(`Cannot set up MSPA controls for SID ${sid}:`);
       const ov = sections[sid] || {};
       const normalizeAs = ov.normalizeAs || sid;
-      if (!NORMALIZATIONS.hasOwnProperty(normalizeAs)) {
+      if (!Object.prototype.hasOwnProperty.call(NORMALIZATIONS, normalizeAs)) {
         logger.logError(`no normalization rules are known for SID ${normalizeAs}`)
         return;
       }

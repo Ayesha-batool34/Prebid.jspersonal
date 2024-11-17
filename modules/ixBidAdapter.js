@@ -226,7 +226,7 @@ export function bidToVideoImp(bid) {
 
   // copy all video properties to imp object
   for (const adUnitProperty in videoAdUnitRef) {
-    if (VIDEO_PARAMS_ALLOW_LIST.indexOf(adUnitProperty) !== -1 && !imp.video.hasOwnProperty(adUnitProperty)) {
+    if (VIDEO_PARAMS_ALLOW_LIST.indexOf(adUnitProperty) !== -1 && !Object.prototype.hasOwnProperty.call(imp.video, adUnitProperty)) {
       imp.video[adUnitProperty] = videoAdUnitRef[adUnitProperty];
     }
   }
@@ -243,7 +243,7 @@ export function bidToVideoImp(bid) {
   verifyVideoPlcmt(imp);
 
   // if placement not already defined, pick one based on `context`
-  if (context && !imp.video.hasOwnProperty('placement')) {
+  if (context && !Object.prototype.hasOwnProperty.call(imp.video, 'placement')) {
     if (context === INSTREAM) {
       imp.video.placement = 1;
     } else if (context === OUTSTREAM) {
@@ -276,7 +276,7 @@ export function bidToVideoImp(bid) {
 }
 
 function verifyVideoPlcmt(imp) {
-  if (imp.video.hasOwnProperty('plcmt') && (!isInteger(imp.video.plcmt) || (imp.video.plcmt < 1 || imp.video.plcmt > 4))) {
+  if (Object.prototype.hasOwnProperty.call(imp.video, 'plcmt') && (!isInteger(imp.video.plcmt) || (imp.video.plcmt < 1 || imp.video.plcmt > 4))) {
     logWarn(
       `IX Bid Adapter: video.plcmt [${imp.video.plcmt}] must be an integer between 1-4 inclusive`
     );
@@ -351,7 +351,7 @@ function bidToImp(bid, mediaType) {
   }
 
   // populate imp level sid
-  if (bid.params.hasOwnProperty('id') && (typeof bid.params.id === 'string' || typeof bid.params.id === 'number')) {
+  if (Object.prototype.hasOwnProperty.call(bid.params, 'id') && (typeof bid.params.id === 'string' || typeof bid.params.id === 'number')) {
     deepSetValue(imp, 'ext.sid', String(bid.params.id));
   }
 
@@ -433,7 +433,7 @@ function parseBid(rawBid, currency, bidRequest) {
   const isValidExpiry = !!((deepAccess(rawBid, 'exp') && isInteger(rawBid.exp)));
   const dealID = deepAccess(rawBid, 'dealid') || deepAccess(rawBid, 'ext.dealid');
 
-  if (PRICE_TO_DOLLAR_FACTOR.hasOwnProperty(currency)) {
+  if (Object.prototype.hasOwnProperty.call(PRICE_TO_DOLLAR_FACTOR, currency)) {
     bid.cpm = rawBid.price / PRICE_TO_DOLLAR_FACTOR[currency];
   } else {
     bid.cpm = rawBid.price / CENT_TO_DOLLAR_FACTOR;
@@ -447,7 +447,7 @@ function parseBid(rawBid, currency, bidRequest) {
 
   bid.netRevenue = NET_REVENUE;
   bid.currency = currency;
-  bid.creativeId = rawBid.hasOwnProperty('crid') ? rawBid.crid : '-';
+  bid.creativeId = Object.prototype.hasOwnProperty.call(rawBid, 'crid') ? rawBid.crid : '-';
   // If mtype = video is passed and vastURl is not set, set vastxml
   if (rawBid.mtype == MEDIA_TYPES.Video && ((rawBid.ext && !rawBid.ext.vasturl) || !rawBid.ext)) {
     bid.vastXml = rawBid.adm;
@@ -544,8 +544,8 @@ function checkVideoParams(mediaTypeVideoRef, paramsVideoRef) {
   }
 
   for (let property of REQUIRED_VIDEO_PARAMS) {
-    const propInMediaType = mediaTypeVideoRef && mediaTypeVideoRef.hasOwnProperty(property);
-    const propInVideoRef = paramsVideoRef && paramsVideoRef.hasOwnProperty(property);
+    const propInMediaType = mediaTypeVideoRef && Object.prototype.hasOwnProperty.call(mediaTypeVideoRef, property);
+    const propInVideoRef = paramsVideoRef && Object.prototype.hasOwnProperty.call(paramsVideoRef, property);
 
     if (!propInMediaType && !propInVideoRef) {
       errorList.push(`IX Bid Adapter: ${property} is not included in either the adunit or params level`);
@@ -553,10 +553,10 @@ function checkVideoParams(mediaTypeVideoRef, paramsVideoRef) {
   }
 
   // check protocols/protocol
-  const protocolMediaType = mediaTypeVideoRef && mediaTypeVideoRef.hasOwnProperty('protocol');
-  const protocolsMediaType = mediaTypeVideoRef && mediaTypeVideoRef.hasOwnProperty('protocols');
-  const protocolVideoRef = paramsVideoRef && paramsVideoRef.hasOwnProperty('protocol');
-  const protocolsVideoRef = paramsVideoRef && paramsVideoRef.hasOwnProperty('protocols');
+  const protocolMediaType = mediaTypeVideoRef && Object.prototype.hasOwnProperty.call(mediaTypeVideoRef, 'protocol');
+  const protocolsMediaType = mediaTypeVideoRef && Object.prototype.hasOwnProperty.call(mediaTypeVideoRef, 'protocols');
+  const protocolVideoRef = paramsVideoRef && Object.prototype.hasOwnProperty.call(paramsVideoRef, 'protocol');
+  const protocolsVideoRef = paramsVideoRef && Object.prototype.hasOwnProperty.call(paramsVideoRef, 'protocols');
 
   if (!(protocolMediaType || protocolsMediaType || protocolVideoRef || protocolsVideoRef)) {
     errorList.push('IX Bid Adapter: protocol/protcols is not included in either the adunit or params level');
@@ -635,7 +635,7 @@ function getEidInfo(allEids) {
   let seenSources = {};
   if (isArray(allEids)) {
     for (const eid of allEids) {
-      const isSourceMapped = SOURCE_RTI_MAPPING.hasOwnProperty(eid.source);
+      const isSourceMapped = Object.prototype.hasOwnProperty.call(SOURCE_RTI_MAPPING, eid.source);
       const hasUids = deepAccess(eid, 'uids.0');
 
       if (hasUids) {
@@ -778,7 +778,7 @@ function addRTI(userEids, eidInfo) {
       if (userEids.length >= MAX_EID_SOURCES) {
         return
       }
-      if (identityInfo.hasOwnProperty(partnerName)) {
+      if (Object.prototype.hasOwnProperty.call(identityInfo, partnerName)) {
         let response = identityInfo[partnerName];
         if (!response.responsePending && response.data && typeof response.data === 'object' &&
           Object.keys(response.data).length && !eidInfo.seenSources[response.data.source]) {
@@ -885,7 +885,7 @@ function applyRegulations(r, bidderRequest) {
     if (bidderRequest.gdprConsent) {
       gdprConsent = bidderRequest.gdprConsent;
 
-      if (gdprConsent.hasOwnProperty('gdprApplies')) {
+      if (Object.prototype.hasOwnProperty.call(gdprConsent, 'gdprApplies')) {
         r.regs = {
           ext: {
             gdpr: gdprConsent.gdprApplies ? 1 : 0
@@ -893,13 +893,13 @@ function applyRegulations(r, bidderRequest) {
         };
       }
 
-      if (gdprConsent.hasOwnProperty('consentString')) {
+      if (Object.prototype.hasOwnProperty.call(gdprConsent, 'consentString')) {
         r.user = r.user || {};
         r.user.ext = {
           consent: gdprConsent.consentString || ''
         };
 
-        if (gdprConsent.hasOwnProperty('addtlConsent') && gdprConsent.addtlConsent) {
+        if (Object.prototype.hasOwnProperty.call(gdprConsent, 'addtlConsent') && gdprConsent.addtlConsent) {
           r.user.ext.consented_providers_settings = {
             addtl_consent: gdprConsent.addtlConsent
           };
@@ -1177,12 +1177,12 @@ function addFPD(bidderRequest, r, fpd, site, user) {
   }
 
   // regulations from ortb2
-  if (fpd.hasOwnProperty('regs') && !bidderRequest.gppConsent) {
-    if (fpd.regs.hasOwnProperty('gpp') && typeof fpd.regs.gpp == 'string') {
+  if (Object.prototype.hasOwnProperty.call(fpd, 'regs') && !bidderRequest.gppConsent) {
+    if (Object.prototype.hasOwnProperty.call(fpd.regs, 'gpp') && typeof fpd.regs.gpp == 'string') {
       deepSetValue(r, 'regs.gpp', fpd.regs.gpp)
     }
 
-    if (fpd.regs.hasOwnProperty('gpp_sid') && Array.isArray(fpd.regs.gpp_sid)) {
+    if (Object.prototype.hasOwnProperty.call(fpd.regs, 'gpp_sid') && Array.isArray(fpd.regs.gpp_sid)) {
       deepSetValue(r, 'regs.gpp_sid', fpd.regs.gpp_sid)
     }
 
@@ -1406,7 +1406,7 @@ function createBannerImps(validBidRequest, missingBannerSizes, bannerImps, bidde
 
   const bannerSizeDefined = includesSize(deepAccess(validBidRequest, 'mediaTypes.banner.sizes'), deepAccess(validBidRequest, 'params.size'));
 
-  if (!bannerImps.hasOwnProperty(validBidRequest.adUnitCode)) {
+  if (!Object.prototype.hasOwnProperty.call(bannerImps, validBidRequest.adUnitCode)) {
     bannerImps[validBidRequest.adUnitCode] = {};
   }
 
@@ -1452,7 +1452,7 @@ function createBannerImps(validBidRequest, missingBannerSizes, bannerImps, bidde
 
   // Create IX imps from params.size
   if (bannerSizeDefined) {
-    if (!bannerImps[validBidRequest.adUnitCode].hasOwnProperty('ixImps')) {
+    if (!Object.prototype.hasOwnProperty.call(bannerImps[validBidRequest.adUnitCode], 'ixImps')) {
       bannerImps[validBidRequest.adUnitCode].ixImps = [];
     }
     bannerImps[validBidRequest.adUnitCode].ixImps.push(imp);
@@ -1469,9 +1469,9 @@ function createBannerImps(validBidRequest, missingBannerSizes, bannerImps, bidde
  * @param {object} imp                The impression for the bidrequest
  */
 function updateMissingSizes(validBidRequest, missingBannerSizes, imp) {
-  if (missingBannerSizes.hasOwnProperty(validBidRequest.adUnitCode)) {
+  if (Object.prototype.hasOwnProperty.call(missingBannerSizes, validBidRequest.adUnitCode)) {
     let currentSizeList = [];
-    if (missingBannerSizes[validBidRequest.adUnitCode].hasOwnProperty('missingSizes')) {
+    if (Object.prototype.hasOwnProperty.call(missingBannerSizes[validBidRequest.adUnitCode], 'missingSizes')) {
       currentSizeList = missingBannerSizes[validBidRequest.adUnitCode].missingSizes;
     }
     removeFromSizes(currentSizeList, validBidRequest.params.size);
@@ -1600,10 +1600,10 @@ export const spec = {
     const mediaTypeBannerSizes = deepAccess(bid, 'mediaTypes.banner.sizes');
     const mediaTypeVideoRef = deepAccess(bid, 'mediaTypes.video');
     const mediaTypeVideoPlayerSize = deepAccess(bid, 'mediaTypes.video.playerSize');
-    const hasBidFloor = bid.params.hasOwnProperty('bidFloor');
-    const hasBidFloorCur = bid.params.hasOwnProperty('bidFloorCur');
+    const hasBidFloor = Object.prototype.hasOwnProperty.call(bid.params, 'bidFloor');
+    const hasBidFloorCur = Object.prototype.hasOwnProperty.call(bid.params, 'bidFloorCur');
 
-    if (bid.hasOwnProperty('mediaType') && !(contains(SUPPORTED_AD_TYPES, bid.mediaType))) {
+    if (Object.prototype.hasOwnProperty.call(bid, 'mediaType') && !(contains(SUPPORTED_AD_TYPES, bid.mediaType))) {
       logWarn('IX Bid Adapter: media type is not supported.');
       return false;
     }
@@ -1718,13 +1718,13 @@ export const spec = {
 
     // Step 2: Update banner impressions with missing sizes
     for (let adunitCode in missingBannerSizes) {
-      if (missingBannerSizes.hasOwnProperty(adunitCode)) {
+      if (Object.prototype.hasOwnProperty.call(missingBannerSizes, adunitCode)) {
         let missingSizes = missingBannerSizes[adunitCode].missingSizes;
 
-        if (!bannerImps.hasOwnProperty(adunitCode)) {
+        if (!Object.prototype.hasOwnProperty.call(bannerImps, adunitCode)) {
           bannerImps[adunitCode] = {};
         }
-        if (!bannerImps[adunitCode].hasOwnProperty('missingImps')) {
+        if (!Object.prototype.hasOwnProperty.call(bannerImps[adunitCode], 'missingImps')) {
           bannerImps[adunitCode].missingImps = [];
           bannerImps[adunitCode].missingCount = 0;
         }
@@ -1782,7 +1782,7 @@ export const spec = {
 
     FEATURE_TOGGLES.setFeatureToggles(serverResponse);
 
-    if (!serverResponse.hasOwnProperty('body')) {
+    if (!Object.prototype.hasOwnProperty.call(serverResponse, 'body')) {
       return bids;
     }
 
@@ -1790,7 +1790,7 @@ export const spec = {
     const seatbid = responseBody.seatbid || [];
 
     for (let i = 0; i < seatbid.length; i++) {
-      if (!seatbid[i].hasOwnProperty('bid')) {
+      if (!Object.prototype.hasOwnProperty.call(seatbid[i], 'bid')) {
         continue;
       }
 
@@ -1901,10 +1901,10 @@ export const spec = {
 function buildImgSyncUrl(syncsPerBidder, index) {
   let consentString = '';
   let gdprApplies = '0';
-  if (gdprConsent && gdprConsent.hasOwnProperty('gdprApplies')) {
+  if (gdprConsent && Object.prototype.hasOwnProperty.call(gdprConsent, 'gdprApplies')) {
     gdprApplies = gdprConsent.gdprApplies ? '1' : '0';
   }
-  if (gdprConsent && gdprConsent.hasOwnProperty('consentString')) {
+  if (gdprConsent && Object.prototype.hasOwnProperty.call(gdprConsent, 'consentString')) {
     consentString = gdprConsent.consentString || '';
   }
   let siteIdParam = siteID !== 0 ? '&site_id=' + siteID.toString() : '';
@@ -1922,13 +1922,13 @@ export function combineImps(imps) {
   imps.forEach((imp) => {
     Object.keys(imp).forEach((key) => {
       if (Object.keys(result).includes(key)) {
-        if (result[key].hasOwnProperty('ixImps') && imp[key].hasOwnProperty('ixImps')) {
+        if (Object.prototype.hasOwnProperty.call(result[key], 'ixImps') && Object.prototype.hasOwnProperty.call(imp[key], 'ixImps')) {
           result[key].ixImps = [...result[key].ixImps, ...imp[key].ixImps];
-        } else if (result[key].hasOwnProperty('missingImps') && imp[key].hasOwnProperty('missingImps')) {
+        } else if (Object.prototype.hasOwnProperty.call(result[key], 'missingImps') && Object.prototype.hasOwnProperty.call(imp[key], 'missingImps')) {
           result[key].missingImps = [...result[key].missingImps, ...imp[key].missingImps];
-        } else if (imp[key].hasOwnProperty('ixImps')) {
+        } else if (Object.prototype.hasOwnProperty.call(imp[key], 'ixImps')) {
           result[key].ixImps = imp[key].ixImps;
-        } else if (imp[key].hasOwnProperty('missingImps')) {
+        } else if (Object.prototype.hasOwnProperty.call(imp[key], 'missingImps')) {
           result[key].missingImps = imp[key].missingImps
         }
       } else {

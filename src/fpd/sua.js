@@ -54,7 +54,7 @@ export function highEntropySUAAccessor(uaData = window.navigator?.userAgentData)
       keys.set(hints, sorted.join('|'));
     }
     const key = keys.get(hints);
-    if (!cache.hasOwnProperty(key)) {
+    if (!Object.prototype.hasOwnProperty.call(cache, key)) {
       try {
         cache[key] = uaData.getHighEntropyValues(hints).then(result => {
           return isEmpty(result) ? null : Object.freeze(uaDataToSUA(SUA_SOURCE_HIGH_ENTROPY, result))

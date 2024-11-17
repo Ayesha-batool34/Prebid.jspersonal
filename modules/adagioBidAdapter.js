@@ -207,7 +207,7 @@ function _parseNativeBidResponse(bid) {
       11: 'displayUrl',
       12: 'cta'
     }
-    if (map.hasOwnProperty(data.type) && typeof data.value === 'string') {
+    if (Object.prototype.hasOwnProperty.call(map, data.type) && typeof data.value === 'string') {
       native[map[data.type]] = data.value;
     }
   }

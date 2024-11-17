@@ -479,11 +479,11 @@ function validateDSA(dsa) {
   return DSA_ATTRIBUTES.reduce((prev, attr) => {
     const dsaEntry = dsa[attr.name];
     return prev && (
-      !dsa.hasOwnProperty(attr.name) ||
+      !Object.prototype.hasOwnProperty.call(dsa, attr.name) ||
       (isNumber(dsaEntry) && dsaEntry >= attr.min && dsaEntry <= attr.max)
     )
   }, true) &&
-    (!dsa.hasOwnProperty('transparency') ||
+    (!Object.prototype.hasOwnProperty.call(dsa, 'transparency') ||
       (isArray(dsa.transparency) && dsa.transparency.every(
         v => isPlainObject(v) && isStr(v.domain) && v.domain && isArray(v.dsaparams) &&
           v.dsaparams.every(x => isNumber(x))

@@ -36,7 +36,7 @@ const TAXONOMIES = {
 function partitionBy(field, items) {
   return items.reduce((partitions, item) => {
     const key = item[field];
-    if (!partitions.hasOwnProperty(key)) partitions[key] = [];
+    if (!Object.prototype.hasOwnProperty.call(partitions, key)) partitions[key] = [];
     partitions[key].push(item);
     return partitions;
   }, {});
@@ -59,7 +59,7 @@ function setLoadedIframeURL(url) {
 export function getTopicsData(name, topics, taxonomies = TAXONOMIES) {
   return Object.entries(partitionBy('taxonomyVersion', topics))
     .filter(([taxonomyVersion]) => {
-      if (!taxonomies.hasOwnProperty(taxonomyVersion)) {
+      if (!Object.prototype.hasOwnProperty.call(taxonomies, taxonomyVersion)) {
         logWarn(`Unrecognized taxonomyVersion from Topics API: "${taxonomyVersion}"; topic will be ignored`);
         return false;
       }

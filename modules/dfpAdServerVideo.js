@@ -154,7 +154,7 @@ export function buildDfpVideoUrl(options) {
       }
     }
   }).forEach(([param, getter]) => {
-    if (!queryParams.hasOwnProperty(param)) {
+    if (!Object.prototype.hasOwnProperty.call(queryParams, param)) {
       const val = getter();
       if (val != null) {
         queryParams[param] = val;

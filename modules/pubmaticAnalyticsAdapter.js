@@ -65,7 +65,7 @@ function sizeToDimensions(size) {
 }
 
 function validMediaType(type) {
-  return ({'banner': 1, 'native': 1, 'video': 1}).hasOwnProperty(type);
+  return Object.prototype.hasOwnProperty.call({'banner': 1, 'native': 1, 'video': 1}, type);
 }
 
 function formatSource(src) {
@@ -547,7 +547,7 @@ function auctionInitHandler(args) {
 
 function bidRequestedHandler(args) {
   args.bids.forEach(function(bid) {
-    if (!cache.auctions[args.auctionId].adUnitCodes.hasOwnProperty(bid.adUnitCode)) {
+    if (!Object.prototype.hasOwnProperty.call(cache.auctions[args.auctionId].adUnitCodes, bid.adUnitCode)) {
       cache.auctions[args.auctionId].adUnitCodes[bid.adUnitCode] = {
         bids: {},
         bidWon: false,

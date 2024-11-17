@@ -54,7 +54,7 @@ export const spec = {
         mediaTypes: bidRequest.mediaTypes
       };
 
-      if (bidRequest.hasOwnProperty('sizes') && bidRequest.sizes.length > 0) {
+      if (Object.prototype.hasOwnProperty.call(bidRequest, 'sizes') && bidRequest.sizes.length > 0) {
         adUnit.sizes = bidRequest.sizes;
       }
 
